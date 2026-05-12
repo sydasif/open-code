@@ -22,6 +22,7 @@
 
 ### Phase 1 · Discovery — "Read Before Write"
 
+0. **Surface Assumptions** — State your understanding of the task. If anything is ambiguous or could go multiple ways, list the options before proceeding.
 1. **Call-Site Search** — Who calls this code? Find every reference.
 2. **Pattern Search** — How does the project solve similar problems?
 3. **History Search** — What do recent commits reveal about intent?

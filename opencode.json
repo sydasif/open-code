@@ -7,12 +7,8 @@
       "command": ["npx", "prettier", "--write", "$FILE"],
       "extensions": [".ts", ".js", ".json", ".md", ".yaml", ".yml", ".html"]
     },
-    "ruff_format": {
-      "command": ["ruff", "format", "$FILE"],
-      "extensions": [".py", ".pyi"]
-    },
-    "ruff_lint": {
-      "command": ["ruff", "check", "--fix", "$FILE"],
+    "uv": {
+      "command": ["uv", "run", "ruff", "format", "$FILE"],
       "extensions": [".py", ".pyi"]
     }
   },

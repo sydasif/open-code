@@ -14,7 +14,7 @@
     "ruff_lint": {
       "command": ["ruff", "check", "--fix", "$FILE"],
       "extensions": [".py", ".pyi"]
-    },
+  },
   "permission": {
     "read": {
       "*": "allow",

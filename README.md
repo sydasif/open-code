@@ -81,10 +81,10 @@ uv run bandit -r src/
 
 ## Configuration Resolution
 
-| Priority | Scope  | Location                      | Purpose                        |
-| :------- | :----- | :---------------------------- | :----------------------------- |
-| 1        | Config | `~/.config/opencode/`         | Personal style, safety, tools  |
-| 2        | Project| `./opencode.json` (optional)  | Project-level overrides        |
+| Priority | Scope   | Location                     | Purpose                       |
+| :------- | :------ | :--------------------------- | :---------------------------- |
+| 1        | Config  | `~/.config/opencode/`        | Personal style, safety, tools |
+| 2        | Project | `./opencode.json` (optional) | Project-level overrides       |
 
 ---
 

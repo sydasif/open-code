@@ -2,6 +2,11 @@
   "$schema": "https://opencode.ai/config.json",
   "instructions": ["~/.config/opencode/rule/*.md"],
   "default_agent": "plan",
+  "agent": {
+    "plan": {
+      "model": "bifrost/gemini/gemma-4-31b-it"
+    }
+  },
   "formatter": {
     "prettier": {
       "command": ["npx", "prettier", "--write", "$FILE"],

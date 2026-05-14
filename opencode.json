@@ -58,6 +58,10 @@
       "type": "remote",
       "url": "http://localhost:8080/mcp",
       "enabled": true
+    },
+    "repomix": {
+      "type": "local",
+      "command": ["npx", "-y", "repomix", "--mcp"]
     }
   },
   "lsp": {

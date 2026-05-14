@@ -6,27 +6,27 @@ Personal [opencode](https://opencode.ai) configuration — rules, skills, agents
 
 ### Tier 1: Always-On Constraints
 
-- **Path:** `~/.config/opencode/AGENTS.md`
-- **Behavior:** Auto-loaded via `opencode.json` → `instructions`
+- **Path:** Global persona settings via `~/.config/opencode/AGENTS.md`
+- **Behavior:** Auto-loaded at startup
 - **Purpose:** Engineering lifecycle, security rules, authority boundaries, mandatory output structure
 
 ### Tier 2: Domain-Specific Rules
 
-- **Path:** `~/.config/opencode/rule/`
-- **Behavior:** Loaded alongside AGENTS.md as instruction files
-- **Purpose:** Python toolchain (`uv`, `ruff`, `pyright`, `pytest`), testing standards, git conventions, web search
+- **Path:** Global rule settings via `~/.config/opencode/rules/*.md`
+- **Behavior:** Loaded alongside `AGENTS.md` as instruction
+- **Purpose:** Personal preferences, testing standards, git conventions, and etc
 
 ### Tier 3: Actionable Skills
 
-- **Path:** `~/.config/opencode/skills/`
-- **Behavior:** Invoked via `skill` tool on intent match
+- **Path:** Domain-specific skill definitions via `~/.config/opencode/skills/`
+- **Behavior:** Invoked via `skill` tool on intent match or explicit request
 - **Purpose:** Reusable step-by-step procedures (code-cleanup, code-refactor, code-review, docker, mcp-builder, pdf-processing, web-search)
 
 ### Tier 4: Specialized Subagents
 
-- **Path:** `~/.config/opencode/agents/`
-- **Behavior:** Spawned via `task` tool for isolated subtasks
-- **Purpose:** Focused agents (code-reviewer) with defined skills and constraints
+- **Path:** Domain-specific agent definitions via `~/.config/opencode/agents/`
+- **Behavior:** Spawned via `@review` tool for isolated subtasks
+- **Purpose:** Focused agents (review) with defined skills and constraints
 
 ---
 
@@ -37,7 +37,7 @@ Personal [opencode](https://opencode.ai) configuration — rules, skills, agents
 ├── AGENTS.md           # Core engineering mandates (auto-loaded)
 ├── opencode.json       # Provider, MCP, LSP, permissions
 ├── .opencodeignore     # Context exclusions
-├── rule/               # Domain-specific rules
+├── rules/               # Domain-specific rules
 │   ├── python_tools.md
 │   ├── testing_rules.md
 │   ├── git_rules.md
@@ -51,7 +51,7 @@ Personal [opencode](https://opencode.ai) configuration — rules, skills, agents
 │   ├── pdf-processing/
 │   └── web-search/
 └── agents/
-    └── code-reviewer.md
+    └── review.md
 ```
 
 ---
@@ -67,7 +67,7 @@ Invoke the `code-cleanup` skill on the changed files.
 ### Running a code review
 
 ```bash
-Use the code-reviewer subagent to analyze the current diff.
+Use the `review` subagent to analyze the current diff.
 ```
 
 ### Security scanning

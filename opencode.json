@@ -1,14 +1,13 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "instructions": ["~/.config/opencode/rule/*.md"],
+  "instructions": ["~/.config/opencode/rules/*.md"],
   "default_agent": "plan",
+  "small_model": "gemini/gemma-4-26b-a4b-it",
   "agent": {
     "build": {
-      "mode": "primary",
       "model": "bifrost/gemini/gemma-4-31b-it"
     },
     "plan": {
-      "mode": "primary",
       "model": "opencode/minimax-m2.5-free"
     }
   },

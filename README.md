@@ -27,8 +27,8 @@ Personal [opencode](https://opencode.ai) configuration — rules, skills, agents
 ### Tier 4: Specialized Subagents
 
 - **Path:** Domain-specific agent definitions via `~/.config/opencode/agents/`
-- **Behavior:** Spawned via `@review` tool for isolated subtasks
-- **Purpose:** Focused agents (review) with defined skills and constraints
+- **Behavior:** Spawned via `@cleanup`, `@refactor`, or `@review` tools for isolated subtasks
+- **Purpose:** Focused agents (cleanup, refactor, review) with defined skills and constraints
 
 ---
 
@@ -183,6 +183,8 @@ This defines where your models actually come from. I'm using Bifrost (a self-hos
 │   ├── pdf-processing/
 │   └── web-search/
 └── agents/
+    ├── cleanup.md
+    ├── refactor.md
     └── review.md
 ```
 

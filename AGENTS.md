@@ -46,10 +46,10 @@ Before delegating to a subagent:
 
 ### Phase 3 · Surgical Execution
 
-- **Skill Chain:** For any code change, invoke the appropriate skill pipeline:
-  - Full pass (new or significantly changed code): `code-cleanup` → `code-refactor` → `code-review`
-  - Modernization only (code already pruned): `code-refactor` → `code-review`
-  - Review only (no changes wanted): `code-review`
+- **Skill Chain:** For any code change, invoke the appropriate pipeline:
+  - Full pass (new or significantly changed code): `@cleanup` → `@refactor` → `@review`
+  - Modernization only (code already pruned): `@refactor` → `@review`
+  - Review only (no changes wanted): `@review`
   - When in doubt, default to the full pass.
 - **Atomic Commits:** One logical change per commit.
 - **No-Noise Policy:** Strip all debug logs before submission.

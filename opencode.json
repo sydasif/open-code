@@ -3,8 +3,13 @@
   "instructions": ["~/.config/opencode/rule/*.md"],
   "default_agent": "plan",
   "agent": {
-    "plan": {
+    "build": {
+      "mode": "primary",
       "model": "bifrost/gemini/gemma-4-31b-it"
+    },
+    "plan": {
+      "mode": "primary",
+      "model": "opencode/minimax-m2.5-free"
     }
   },
   "formatter": {

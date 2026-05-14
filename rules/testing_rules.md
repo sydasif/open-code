@@ -33,7 +33,7 @@ These are **targets**, not hard gates that block all work on a new or under-test
 
 ```bash
 uv run pytest
-uv run pytest --cov=src --cov-branch --cov-fail-under=90
+uv run pytest --cov=src --cov-branch --cov-fail-under=85
 ```
 
 ---

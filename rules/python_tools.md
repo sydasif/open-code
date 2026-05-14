@@ -45,13 +45,13 @@ uv run pytest                  # Run tests
 ## Security Scans
 
 ```bash
-uv run safety check            # Check for vulnerable dependencies
+uv run safety scan            # Check for vulnerable dependencies
 uv run bandit -r src/          # Static security analysis
 ```
 
 ### Security Scan Output Handling
 
-- **`safety check` findings:** Any vulnerability rated medium or above is a **blocking issue**. Report it in the Discovery Report under Assumptions & Risks and halt until the user confirms how to proceed. Low-severity findings are reported but do not block.
+- **`safety scan` findings:** Any vulnerability rated medium or above is a **blocking issue**. Report it in the Discovery Report under Assumptions & Risks and halt until the user confirms how to proceed. Low-severity findings are reported but do not block.
 - **`bandit` findings:** Severity HIGH or confidence HIGH = blocking. Everything else = report in the output structure under Assumptions & Risks, do not auto-fix.
 - Never suppress or ignore security scan output. If a finding is a known false positive, document why explicitly.
 

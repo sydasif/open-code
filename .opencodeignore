@@ -10,3 +10,12 @@ dist/**
 build/**
 *.log
 package-lock.json
+bun.lock
+.ruff_cache/**
+.pytest_cache/**
+.mypy_cache/**
+.venv/**
+venv/**
+secrets/**
+.coverage
+*.egg-info/**

@@ -73,7 +73,7 @@ Use the `review` subagent to analyze the current diff.
 ### Security scanning
 
 ```bash
-uv run safety check
+uv run safety scan
 uv run bandit -r src/
 ```
 

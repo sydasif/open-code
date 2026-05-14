@@ -78,7 +78,7 @@ This skill transforms legacy Python code into modern, maintainable, and efficien
 
 ## Quality Assurance
 
-For detailed tool commands, see `CLAUDE.md`.
+For detailed tool commands, see `AGENTS.md`.
 
 ### Before Refactoring
 

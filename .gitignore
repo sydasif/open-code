@@ -9,3 +9,11 @@ __pycache__/
 dist/
 build/
 *.log
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+secrets/
+.coverage
+*.egg-info/

@@ -1,245 +1,142 @@
 ---
 name: code-cleanup
-description: Codebase cleanup workflow for applying YAGNI, DRY, and KISS principles. Use when asked to review, simplify, refactor, or clean up a project for unnecessary code, duplicated logic, over-abstraction, excessive complexity, stale tests, or docs that no longer match implementation.
+description: Codebase cleanup workflow applying YAGNI, DRY, and KISS principles. Use when asked to review, simplify, refactor, or remove dead/leftover code, duplicated logic, over-abstraction, or stale docs.
 ---
 
-# Cleanup Principles
+# Code Cleanup
 
-## Overview
+## The Three Rules
 
-Use this skill to clean up a codebase with three practical rules:
+- **KISS**: prefer direct, readable code over clever abstractions.
+- **YAGNI**: remove code with no current use — unused, dead, or leftover.
+- **DRY**: reduce duplication only when it lowers real maintenance cost.
 
-- **KISS**: prefer direct, readable implementations over clever abstractions.
-- **YAGNI**: remove code whose current need is not demonstrated or needed.
-- **DRY**: reduce meaningful duplication without hiding simple behavior.
-
-Treat these rules as engineering judgment, not slogans. Preserve public contracts unless the user explicitly wants breaking cleanup.
-
-## Priority Order
-
-Apply the rules in this order when they conflict:
-
-1. **KISS**: keep the code easiest to understand and change.
-2. **YAGNI**: remove unsupported future-proofing.
-3. **DRY**: reduce duplication only when it lowers real maintenance cost.
-
-Use these tie-breakers:
-
-- Prefer simple duplication over a vague abstraction.
-- Prefer deletion over generalization when code has no current call sites, tests, docs, or framework purpose.
-- Prefer local explicit code when behavior is short and unlikely to change together.
-- Prefer a shared helper when duplicated logic represents a real policy — error shape, security validation, serialization, timeout handling, or network execution.
-- Preserve public APIs unless the user explicitly accepts breaking changes.
+When rules conflict, apply them in this order: KISS → YAGNI → DRY.
 
 ---
 
-## Pre-Flight Gates
+## Before You Start
 
-Run these checks before any analysis or editing. Stop and confirm with the user if any gate fails.
+### 1. Check git status
 
-### Gate 1 — Git cleanliness
+Run `git status`. If there are uncommitted changes, confirm scope with the user before touching anything.
 
-Run `git status`. If there are uncommitted user changes, confirm the cleanup scope explicitly before proceeding. Do not mistake in-progress work for cleanup targets.
+### 2. Check test coverage
 
-### Gate 2 — Test coverage baseline
+If coverage is thin or absent, escalate all findings to "needs care" and warn the user. Cleanup without tests can silently break behavior.
 
-Assess whether the codebase has meaningful automated test coverage before ranking anything as "safe cleanup." If test coverage is thin or absent, escalate all findings to "needs care" and warn the user. YAGNI and KISS cleanup without tests can break behavior silently.
+### 3. Read project guidance
 
-### Gate 3 — Project-level overrides
-
-Read `AGENTS.md`, `README.md`, contribution docs, and any style/convention files. If project-level guidance conflicts with the principles in this skill, **project guidance takes precedence**. Note any overrides in the findings report.
+Read `AGENTS.md`, `README.md`, and any contribution or style docs. Project-level rules override this skill. Note any conflicts.
 
 ---
 
-## Workflow
+## What to Look For
 
-### 1. Inspect the project shape
+### Dead and leftover code (YAGNI)
 
-- Read repository guidance: `AGENTS.md`, `README.md`, contribution docs, test commands.
-- Map source, tests, docs, and public interfaces.
-- Confirm git status is clean (Gate 1 above).
-- Assess test coverage (Gate 2 above).
-- Note any project-specific overrides (Gate 3 above).
+- Unused imports, helpers, parameters, config keys, validators, adapters
+- Functions or classes with zero call sites
+- Code behind flags or conditions that can never be true
+- "Future-proof" logic with no tests, docs, or callers
+- Stale comments describing behavior that was removed
+- Docs referencing files, functions, or structure that no longer exist
 
-### 2. Identify candidates with evidence
+### Duplicated logic (DRY)
 
-- Search call sites with `rg`.
-- Compare implementation against docs and tests.
-- Separate internal cleanup from public API removal.
-- Use concrete file and line references — no broad claims.
+- Identical or near-identical branches across modules
+- Repeated error mapping, serialization, validation, or result shaping
+- Tests reimplementing the same fixture or async fake multiple times
+- **Rule of three**: tolerate one duplicate; extract on the third occurrence
 
-### 3. Rank findings before editing
+### Unnecessary complexity (KISS)
 
-**Safe cleanup** — low risk, act directly:
+- One-use helpers that wrap a single direct call
+- Overly defensive branching around impossible states
+- Abstractions with vague names that obscure simple behavior
+- Tests asserting implementation details instead of behavior
 
-- Unused imports, dead helpers with zero call sites, stale comments describing removed behavior.
-- Duplicated branches with byte-for-byte identical behavior.
-- Docs that describe code structure that no longer exists.
+---
 
-**Needs care** — confirm or flag before acting:
+## Risk Levels
 
-- Public tools, exported names, documented behavior, config formats.
-- Test fixtures that may be used by consumers outside the repo.
-- Anything where test coverage is thin.
+**Safe — act directly:**
 
-**Usually skip** — document as skipped with reason:
+- Unused imports and dead helpers with zero call sites
+- Byte-for-byte duplicated branches
+- Stale comments and docs describing removed code or structure
 
-- Tiny duplication that is clearer inline than abstracted.
-- Abstractions that encode a real domain boundary.
-- Compatibility shims with known external users.
+**Needs care — confirm before acting:**
 
-Resolve conflicts using the priority order: KISS, then YAGNI, then DRY.
+- Exported names, public APIs, documented behavior
+- Config formats with potential external consumers
+- Anything with thin or no test coverage
 
-### 4. Make narrow, batched changes
+**Skip — document why:**
 
-- Scope edits to one module or layer per pass. Do not sweep the entire codebase in a single change.
-- Avoid mixing style cleanup with behavior changes in the same diff.
-- Do not introduce a new abstraction unless it removes real complexity across multiple call sites.
+- Tiny duplication that is clearer inline than abstracted
+- Abstractions encoding a real domain boundary
+- Compatibility shims with known external users
+
+---
+
+## How to Clean
+
+- Work one module or layer per pass. Don't sweep the whole codebase at once.
+- Don't mix style changes with behavior changes in the same diff.
+- Don't introduce a new abstraction unless it removes real complexity across multiple call sites.
 - Preserve existing naming, error shape, and test style.
-- If a removal structurally forecloses an obvious and reasonable future extension point, pause and flag it rather than deleting silently.
+- If a removal forecloses an obvious future extension point, flag it instead of deleting silently.
 
-### 5. Verify behavior
-
-- Run the repo's lint and test commands after each module-level batch.
-- If sandbox restrictions block verification, surface that to the user before continuing.
-- Add or update tests when cleanup touches shared helpers, public tool contracts, or previously untested forwarding behavior.
-
-### 6. Update docs
-
-Update docs when:
-
-- Files move or are deleted.
-- Helper ownership or location changes.
-- Test coverage materially changes.
-- Commands change.
-- Public-facing behavior changes.
-
-Do not update docs for invisible internal simplification unless those docs explicitly describe that internal structure.
-
----
-
-## YAGNI Pass
-
-Look for code that exists only for hypothetical future use:
-
-- Unused helpers, imports, parameters, config options, validators, adapters, or wrappers.
-- Convenience APIs that duplicate a generic API without adding behavior.
-- "Future-proof" parsing or compatibility logic with no tests, docs, or call sites.
-- Stale comments describing behavior that no longer exists.
-
-**Before removing, ask:**
-
-- Is it documented as public surface?
-- Is it imported outside the module?
-- Is it needed for a framework hook, plugin registration, or generated schema?
-- Does a test depend on the current contract?
-- Does removing it foreclose a reasonable, near-term extension point without a clear path to add it back?
-
-If any answer is "yes" or "unclear," report it as a compatibility risk — do not delete.
-
-> **YAGNI misapplication guard**: YAGNI is not a license for sloppy deletion. The goal is to remove speculative complexity, not to paint the codebase into a corner. Prefer removing _implementations_ of unused features over removing _seams_ that make future change possible.
-
----
-
-## DRY Pass
-
-Reduce duplication only when the duplication has maintenance cost.
-
-**Good DRY targets:**
-
-- Repeated error mapping, task setup, serialization, validation, or result shaping across modules.
-- Multiple tests reimplementing the same nontrivial fixture or async fake.
-- Docs repeating stale architecture in several places.
-
-**Rule of Three**: Duplicate code once if necessary. On the third occurrence across distinct call sites, treat it as a DRY candidate and extract a shared helper.
-
-**Skip DRY when:**
-
-- Two call sites are similar but likely to evolve differently (shared name, different policy).
-- A helper would obscure a simple one-liner.
-- The abstraction name would be vaguer than the code it replaces.
-- Forcing DRY would conflict with KISS or YAGNI.
-
-Good DRY cleanup creates one small helper at the same architectural layer as the repeated behavior. It does not create new layers or cross module boundaries without justification.
-
----
-
-## KISS Pass
-
-Simplify code that makes readers jump through unnecessary indirection:
-
-- One-use helpers that hide a direct call.
-- Mapper functions representable as data on the relevant type.
-- Overly defensive branching around impossible states.
-- Tests that assert implementation details without protecting behavior.
-- Stale comments that describe removed behavior (also a YAGNI signal).
-
-Prefer the simplest form that still preserves:
-
-- Clear error semantics.
-- Testability.
-- Existing public API.
-- Local architectural rules.
-
-> Note: simplicity is domain-relative. Some problems are inherently complex. KISS means "don't add accidental complexity," not "avoid all complexity." A solution that is simple for a domain expert may look complex to a novice — use the team's conventions as the baseline, not an idealized minimum.
+After each pass: run lint and tests. Fix failures before continuing. Never weaken a failing test to make cleanup pass.
 
 ---
 
 ## Reporting
 
-### Exploration or review mode
-
-Report findings before making any changes, unless the user asked to implement directly.
-
-Use this shape:
+### Review mode (before changes)
 
 ```
 ## Findings
 
 ### Pre-flight
-- Git status: [clean / uncommitted changes — describe]
-- Test coverage: [adequate / thin / unknown — describe risk]
-- Project overrides from AGENTS.md: [none / list any]
+- Git status: [clean / uncommitted changes]
+- Test coverage: [adequate / thin / unknown]
+- Project overrides: [none / list any]
 
-### Candidates (ordered by risk or payoff)
-- [file:line] Description — category (safe / needs care / skip)
-- ...
+### Candidates
+- [file:line] Description — safe / needs care / skip
 
 ### Safe cleanup
-Changes that can be made without public contract risk.
+Low-risk changes ready to apply.
 
 ### Risky cleanup
-Changes that need user confirmation before proceeding.
+Changes needing confirmation.
 
-### Skipped candidates
-Items evaluated but not actioned, with the reason for each.
+### Skipped
+Items evaluated but not actioned, with reasons.
 
 ### Verification plan
-Lint and test commands to run. Doc sections to update.
+Lint/test commands. Doc sections to update.
 ```
 
-### Implementation mode
-
-Finish with:
+### After changes
 
 ```
 ## What changed
-[summary of edits, scoped to module or layer]
+[summary scoped to module or layer]
 
 ## What was verified
-[lint/test output or reason verification was skipped]
+[lint/test output, or reason skipped]
 
 ## Residual risks
-[skipped candidates, thin coverage areas, public API concerns]
+[skipped items, thin coverage areas, public API concerns]
 ```
 
 ---
 
-## Agentic Operation Notes
+## Agentic Notes
 
-When operating as an agent across multiple passes or context windows:
-
-- Leave a `cleanup-progress.md` file at the repo root noting: what was analyzed, what was changed, what is pending, and any unresolved risks.
-- Batch changes by module. Do not accumulate a multi-module diff and apply it in one step.
-- Never weaken a failing test to make cleanup pass. Surface the failure and stop.
-- If a cleanup action introduces a regression the agent cannot resolve, revert and report — do not work around it silently.
+- Leave a `cleanup-progress.md` at the repo root tracking: what was analyzed, changed, pending, and any unresolved risks.
+- Batch changes by module. Never accumulate a multi-module diff.
+- If a change introduces a regression you can't resolve, revert and report.

@@ -44,7 +44,7 @@
     }
   },
   "mcp": {
-    "duck": {
+    "ddg_search": {
       "type": "local",
       "command": ["web-search-mcp"],
       "enabled": true

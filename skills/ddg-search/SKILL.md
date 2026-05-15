@@ -1,17 +1,17 @@
 ---
-name: web-search
-description: Use duck MCP for web searches and real-time info retrieval. Includes tool mapping, API reference, and second opinion strategy.
+name: ddg-search
+description: MCP for web search, documentation search and real-time info retrieval, using DuckDuckGo.
 ---
 
 # Web Search Instructions
 
-Use the following instructions to perform web searches with the `duck` mcp for real-time information retrieval.
+Use the following instructions to perform web searches with the `ddg_search` mcp for real-time information retrieval.
 
 ## 1. Tool Mapping
 
 | Goal                         | Tool           | Key Parameter                  |
 | :--------------------------- | :------------- | :----------------------------- |
-| Broad search / News          | `search_web`   | `search_type='news' \| 'text'` |
+| Broad search / News          | `web_search`   | `search_type='news' \| 'text'` |
 | Official Documentation       | `search_docs`  | `domain='docs.example.com'`    |
 | Deep Page Reading            | `fetch_page`   | `output_format='markdown'`     |
 | Address $\rightarrow$ Coords | `get_location` | `query='Address, City'`        |
@@ -19,7 +19,7 @@ Use the following instructions to perform web searches with the `duck` mcp for r
 
 ## 2. API Reference
 
-### `search_web`
+### `web_search`
 
 - **Use**: Broad topics, trending news.
 - **Params**: `query`, `search_type` ('text'/'news'), `time_range` ('d','w','m','y'), `region`.

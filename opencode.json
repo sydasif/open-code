@@ -41,6 +41,32 @@
       "*.secret": "deny",
       "*credentials*": "deny",
       "*.env.example": "allow"
+    },
+    "bash": {
+      "git diff*": "allow",
+      "git log*": "allow",
+      "git status*": "allow",
+      "git show*": "allow",
+      "git rev-parse*": "allow",
+      "git ls-files*": "allow",
+      "git branch*": "allow",
+      "uv run ruff*": "allow",
+      "uv run pytest*": "allow",
+      "uv run mypy*": "allow",
+      "uv run pyright*": "allow",
+      "uv run safety*": "allow",
+      "uv run bandit*": "allow",
+      "ls*": "allow",
+      "wc*": "allow",
+      "grep*": "allow",
+      "rg*": "allow",
+      "find*": "allow",
+      "curl*": "ask",
+      "wget*": "ask",
+      "docker*": "ask",
+      "sudo*": "deny",
+      "rm -rf*": "deny",
+      "*": "ask"
     }
   },
   "mcp": {
@@ -62,7 +88,8 @@
     "repomix": {
       "type": "local",
       "command": ["npx", "-y", "repomix", "--mcp"],
-      "enabled": true
+      "enabled": true,
+      "timeout": 30000
     }
   },
   "lsp": {

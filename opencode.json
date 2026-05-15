@@ -4,12 +4,8 @@
   "default_agent": "plan",
   "small_model": "opencode/big-pickle",
   "agent": {
-    "build": {
-      "model": "opencode/minimax-m2.5-free"
-    },
-    "plan": {
-      "model": "opencode/nemotron-3-super-free"
-    }
+    "build": { "model": "opencode/minimax-m2.5-free" },
+    "plan": { "model": "opencode/nemotron-3-super-free" }
   },
   "formatter": {
     "prettier": {
@@ -32,7 +28,7 @@
       "*credentials*": "deny",
       "*.env.example": "allow"
     },
-    "write": {
+    "edit": {
       "*": "allow",
       "*.env": "deny",
       "*.env.*": "deny",
@@ -43,13 +39,7 @@
       "*.env.example": "allow"
     },
     "bash": {
-      "git diff*": "allow",
-      "git log*": "allow",
-      "git status*": "allow",
-      "git show*": "allow",
-      "git rev-parse*": "allow",
-      "git ls-files*": "allow",
-      "git branch*": "allow",
+      "git *": "allow",
       "uv run ruff*": "allow",
       "uv run pytest*": "allow",
       "uv run mypy*": "allow",
@@ -75,11 +65,7 @@
       "command": ["web-search-mcp"],
       "enabled": true
     },
-    "nornir": {
-      "type": "local",
-      "command": ["nornir-mcp"],
-      "enabled": true
-    },
+    "nornir": { "type": "local", "command": ["nornir-mcp"], "enabled": true },
     "Bifrost": {
       "type": "remote",
       "url": "http://localhost:8080/mcp",
@@ -96,45 +82,23 @@
     "pyright": {
       "command": ["pyright-langserver", "--stdio", "--no-implicit-any"]
     },
-    "yaml-ls": {
-      "command": ["yaml-language-server", "--stdio"]
-    },
-    "bash": {
-      "command": ["bash-language-server", "start"]
-    }
+    "yaml-ls": { "command": ["yaml-language-server", "--stdio"] },
+    "bash": { "command": ["bash-language-server", "start"] }
   },
   "provider": {
     "bifrost": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Bifrost",
-      "options": {
-        "baseURL": "http://localhost:8080/v1"
-      },
+      "options": { "baseURL": "http://localhost:8080/v1" },
       "models": {
-        "gemini/gemma-4-31b-it": {
-          "name": "Gemma-4-31b"
-        },
-        "gemini/gemma-4-26b-a4b-it": {
-          "name": "Gemma-4-26b"
-        },
-        "gemini/gemini-3.1-flash-lite": {
-          "name": "Gemini-3.1-flash"
-        },
-        "mistral/mistral-small-2603": {
-          "name": "Mistral-small"
-        },
-        "mistral/mistral-medium-3-5": {
-          "name": "Mistral-medium"
-        },
-        "mistral/mistral-large-2512": {
-          "name": "Mistral-large"
-        },
-        "mistral/ministral-14b-2512": {
-          "name": "Ministral-14b"
-        },
-        "mistral/devstral-2512": {
-          "name": "Devstral"
-        }
+        "gemini/gemma-4-31b-it": { "name": "Gemma-4-31b" },
+        "gemini/gemma-4-26b-a4b-it": { "name": "Gemma-4-26b" },
+        "gemini/gemini-3.1-flash-lite": { "name": "Gemini-3.1-flash" },
+        "mistral/mistral-small-2603": { "name": "Mistral-small" },
+        "mistral/mistral-medium-3-5": { "name": "Mistral-medium" },
+        "mistral/mistral-large-2512": { "name": "Mistral-large" },
+        "mistral/ministral-14b-2512": { "name": "Ministral-14b" },
+        "mistral/devstral-2512": { "name": "Devstral" }
       }
     }
   }

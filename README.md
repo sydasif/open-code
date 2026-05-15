@@ -186,6 +186,7 @@ This defines where your models actually come from. I'm using Bifrost (a self-hos
 └── agents/
     ├── cleanup.md
     ├── refactor.md
+    ├── research.md
     └── review.md
 ```
 

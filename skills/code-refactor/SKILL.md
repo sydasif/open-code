@@ -13,7 +13,7 @@ This skill transforms legacy Python code into modern, maintainable, and efficien
 
 > If `guidelines`, are missing, treat those as informational placeholders and apply your team's conventions directly.
 
-- For comprehensive Python best practices, see `python-expert` skill.
+- For comprehensive Python best practices, see `python-rules` skill.
 
 ---
 
@@ -86,7 +86,7 @@ Run type checking, linting, and tests to establish baseline:
 
 ```
 mypy <target>
-ruff check <target>   # or flake8
+ruff check <target>
 pytest --tb=short
 pytest --cov=<target> --cov-report=term-missing
 ```

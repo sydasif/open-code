@@ -67,10 +67,12 @@ Always consult the relevant skill guideline **before** starting a task.
 - `code-cleanup` — YAGNI, DRY, KISS codebase cleanup
 - `code-refactor` — Python modernization with best practices
 - `code-review` — Final-gate review of completed changes
+- `ddg-search` — Web search via Duck MCP
 - `docker-expert` — Docker containerization, multi-stage builds, security
 - `mcp-builder` — Building MCP servers (FastMCP / TypeScript SDK)
-- `pdf-processing` — PDF forms, tables, OCR, batch operations
-- `web-search` — Web search via Duck MCP (see `rules/web_search.md`)
+- `python-rules` — Python-specific code review rules
+- `python-testing` — Python testing standards, patterns, and best practices
+- `repomix` — Pack codebases into AI-friendly formats
 
 > **Note:** All skills below are available in OpenCode from `~/.config/opencode/skills/`.
 

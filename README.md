@@ -22,7 +22,7 @@ Personal [opencode](https://opencode.ai) configuration — rules, skills, agents
 
 - **Path:** Domain-specific skill definitions via `~/.config/opencode/skills/`
 - **Behavior:** Invoked via `skill` tool on intent match or explicit request
-- **Purpose:** Reusable step-by-step procedures (code-cleanup, code-refactor, code-review, docker, mcp-builder, pdf-processing, ddg-search, repomix)
+- **Purpose:** Reusable step-by-step procedures (code-cleanup, code-refactor, code-review, docker, mcp-builder, python-rules, python-testing, ddg-search, repomix)
 
 ### Tier 4: Specialized Subagents
 
@@ -50,7 +50,7 @@ This tells your IDE (VS Code, etc.) the shape of valid configuration. You'll get
 "instructions": ["~/.config/opencode/rules/*.md"]
 ```
 
-This glob pattern loads every rule file in your `rules/` directory at startup. Think of it as injecting your personal preferences directly into the agent's context. Mine includes Python tooling standards, testing requirements, git conventions, and web search behavior.
+This glob pattern loads every rule file in your `rules/` directory at startup. Think of it as injecting your personal preferences directly into the agent's context. Mine includes Python tooling standards, testing requirements, and git conventions.
 
 **Why not list them individually?** Using `*.md` means any new rule file automatically gets picked up—no config edits required when you add a new domain.
 
@@ -69,12 +69,12 @@ This glob pattern loads every rule file in your `rules/` directory at startup. T
 
 ```json
 "agent": {
-  "build": { "model": "bifrost/gemini/gemma-4-31b-it" },
-  "plan": { "model": "opencode/minimax-m2.5-free" }
+  "build": { "model": "opencode/minimax-m2.5-free" },
+  "plan": { "model": "opencode/nemotron-3-super-free" }
 }
 ```
 
-Different tasks need different capabilities. My `build` agent gets the heavyweight Gemma-4-31b for complex implementation work, while `plan` uses MiniMax for reasoning and planning. This separation keeps costs in check—you don't need a 31B model to decide _what_ to build.
+Different tasks need different capabilities. My `build` agent uses MiniMax for implementation work, while `plan` uses Nemotron for reasoning and planning. This separation keeps costs in check—you don't need a heavy model to decide _what_ to build.
 
 ### `formatter` — On-Save Auto-Formatting
 
@@ -110,19 +110,21 @@ The read and write rules are identical here—you generally don't want the agent
 
 ```json
 "mcp": {
-  "duck": { "type": "local", "command": ["web-search-mcp"], "enabled": true },
+  "ddg_search": { "type": "local", "command": ["web-search-mcp"], "enabled": true },
   "nornir": { "type": "local", "command": ["nornir-mcp"], "enabled": true },
-  "Bifrost": { "type": "remote", "url": "http://localhost:8080/mcp", "enabled": true }
+  "Bifrost": { "type": "remote", "url": "http://localhost:8080/mcp", "enabled": true },
+  "repomix": { "type": "local", "command": ["npx", "-y", "repomix", "--mcp"], "enabled": true }
 }
 ```
 
 MCP (Model Context Protocol) brings external capabilities into opencode:
 
-| Tool        | Type   | Purpose                                |
-| ----------- | ------ | -------------------------------------- |
-| **duck**    | Local  | Web search & live data retrieval       |
-| **nornir**  | Local  | Network automation & device management |
-| **Bifrost** | Remote | Custom LLM backend (local GPU serving) |
+| Tool           | Type   | Purpose                                    |
+| -------------- | ------ | ------------------------------------------ |
+| **ddg_search** | Local  | Web search & live data retrieval           |
+| **nornir**     | Local  | Network automation & device management     |
+| **Bifrost**    | Remote | Custom LLM backend (local GPU serving)     |
+| **repomix**    | Local  | Package codebases into AI-friendly formats |
 
 The `enabled: true` flag means these load automatically at startup. `type: local` spawns the process; `type: remote` connects to an already-running server.
 
@@ -148,13 +150,14 @@ Language servers provide real-time diagnostics, goto-definition, and autocomplet
 "provider": {
   "bifrost": {
     "npm": "@ai-sdk/openai-compatible",
+    "name": "Bifrost",
     "options": { "baseURL": "http://localhost:8080/v1" },
     "models": { ... }
   }
 }
 ```
 
-This defines where your models actually come from. I'm using Bifrost (a self-hosted OpenAI-compatible server) running locally on port 8080. The `models` map gives each model a friendly alias for display in logs and UI.
+This defines where your models actually come from. I'm using Bifrost (a self-hosted OpenAI-compatible server) running locally on port 8080. The `models` map gives each model a friendly alias for display in logs and UI. Available models: **Gemma-4-31b**, **Gemma-4-26b**, **Gemini-3.1-flash**, **Mistral-small**, **Mistral-medium**, **Mistral-large**, **Ministral-14b**, **Devstral**.
 
 ---
 
@@ -178,7 +181,6 @@ This defines where your models actually come from. I'm using Bifrost (a self-hos
 │   ├── code-review/
 │   ├── docker-expert/
 │   ├── mcp-builder/
-│   ├── pdf-processing/
 │   ├── python-rules/
 │   ├── python-testing/
 │   ├── ddg-search/

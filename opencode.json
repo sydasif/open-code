@@ -61,7 +61,8 @@
     },
     "repomix": {
       "type": "local",
-      "command": ["npx", "-y", "repomix", "--mcp"]
+      "command": ["npx", "-y", "repomix", "--mcp"],
+      "enabled": true
     }
   },
   "lsp": {

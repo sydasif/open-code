@@ -171,9 +171,7 @@ This defines where your models actually come from. I'm using Bifrost (a self-hos
 ├── .opencodeignore     # Context exclusions
 ├── rules/               # Domain-specific rules
 │   ├── python_tools.md
-│   ├── testing_rules.md
-│   ├── git_rules.md
-│   └── web_search.md
+│   └── git_rules.md
 ├── skills/             # Intent-based workflows
 │   ├── code-cleanup/
 │   ├── code-refactor/
@@ -181,6 +179,8 @@ This defines where your models actually come from. I'm using Bifrost (a self-hos
 │   ├── docker-expert/
 │   ├── mcp-builder/
 │   ├── pdf-processing/
+│   ├── python-rules/
+│   ├── python-testing/
 │   ├── ddg-search/
 │   └── repomix/
 └── agents/

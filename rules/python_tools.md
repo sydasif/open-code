@@ -59,4 +59,4 @@ uv run bandit -r src/          # Static security analysis
 
 ## See Also
 
-- `rules/testing_rules.md` — Test patterns, coverage thresholds
+- `skills/python-testing/SKILL.md` — Test patterns, coverage thresholds

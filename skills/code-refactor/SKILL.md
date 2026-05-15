@@ -201,6 +201,110 @@ logger.debug("Connecting to %s", host)
 logger.error("Timeout on %s", host)
 ```
 
+### Scenario 6: Migrate dict to TypedDict
+
+```python
+# Before
+def process_user(user_data):
+    name = user_data["name"]
+    age = user_data["age"]
+    active = user_data.get("active", False)
+    return f"{name} ({age}) - Active: {active}"
+
+# After
+from typing import TypedDict
+
+class User(TypedDict):
+    name: str
+    age: int
+    active: bool
+
+def process_user(user_data: User) -> str:
+    name = user_data["name"]
+    age = user_data["age"]
+    active = user_data.get("active", False)
+    return f"{name} ({age}) - Active: {active}"
+```
+
+### Scenario 7: Convert positional args to keyword-only
+
+```python
+# Before
+def create_user(name, age, active=True, admin=False):
+    return {"name": name, "age": age, "active": active, "admin": admin}
+
+# After
+def create_user(name: str, age: int, *, active: bool = True, admin: bool = False):
+    """Create a new user.
+
+    Args:
+        name: User's full name
+        age: User's age
+        active: Whether the user is active
+        admin: Whether the user has admin privileges
+    """
+    return {"name": name, "age": age, "active": active, "admin": admin}
+```
+
+### Scenario 8: Replace index loops and manual accumulators
+
+```python
+# Before
+items = ["apple", "banana", "cherry"]
+for i in range(len(items)):
+    print(f"{i}: {items[i]}")
+
+total = 0
+for num in numbers:
+    total += num
+
+filtered = []
+for num in numbers:
+    if num > 0:
+        filtered.append(num * 2)
+
+# After
+for i, item in enumerate(items):
+    print(f"{i}: {item}")
+
+total = sum(numbers)
+
+filtered = [num * 2 for num in numbers if num > 0]
+```
+
+### Scenario 9: Use specific exceptions with exception chaining
+
+```python
+# Before
+def divide(a, b):
+    try:
+        result = a / b
+    except:
+        return None
+
+# After
+def divide(a: float, b: float) -> float:
+    """Divide a by b.
+
+    Args:
+        a: Dividend
+        b: Divisor
+
+    Returns:
+        The result of a / b
+
+    Raises:
+        ZeroDivisionError: If b is zero
+        TypeError: If a or b are not numeric
+    """
+    try:
+        return a / b
+    except ZeroDivisionError as e:
+        raise ZeroDivisionError(f"Cannot divide {a} by zero") from e
+    except TypeError as e:
+        raise TypeError(f"Invalid operand types: {type(a).__name__}, {type(b).__name__}") from e
+```
+
 ---
 
 Use this skill to modernize legacy Python code into clean, maintainable, and efficient implementations using contemporary Python features and best practices — after the codebase has been pruned with `code-cleanup`.

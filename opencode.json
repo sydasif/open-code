@@ -5,12 +5,10 @@
   "small_model": "opencode/big-pickle",
   "agent": {
     "build": {
-      "model": "opencode/minimax-m2.5-free",
-      "temperature": 0.3
+      "model": "opencode/minimax-m2.5-free"
     },
     "plan": {
-      "model": "opencode/nemotron-3-super-free",
-      "temperature": 0.1
+      "model": "opencode/nemotron-3-super-free"
     }
   },
   "formatter": {

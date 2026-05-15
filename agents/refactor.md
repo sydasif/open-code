@@ -1,8 +1,8 @@
 ---
 description: Python code modernization agent
 mode: subagent
-model: "opencode/deepseek-v4-flash-free"
-temperature: 0.7
+model: "opencode/minimax-m2.5-free"
+temperature: 0.3
 ---
 
 Invoke the `code-refactor` skill to modernize Python code.

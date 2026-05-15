@@ -22,7 +22,7 @@ Personal [opencode](https://opencode.ai) configuration — rules, skills, agents
 
 - **Path:** Domain-specific skill definitions via `~/.config/opencode/skills/`
 - **Behavior:** Invoked via `skill` tool on intent match or explicit request
-- **Purpose:** Reusable step-by-step procedures (code-cleanup, code-refactor, code-review, docker, mcp-builder, pdf-processing, web-search)
+- **Purpose:** Reusable step-by-step procedures (code-cleanup, code-refactor, code-review, docker, mcp-builder, pdf-processing, ddg-search, repomix)
 
 ### Tier 4: Specialized Subagents
 
@@ -181,7 +181,8 @@ This defines where your models actually come from. I'm using Bifrost (a self-hos
 │   ├── docker-expert/
 │   ├── mcp-builder/
 │   ├── pdf-processing/
-│   └── web-search/
+│   ├── ddg-search/
+│   └── repomix/
 └── agents/
     ├── cleanup.md
     ├── refactor.md

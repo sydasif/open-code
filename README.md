@@ -1,6 +1,6 @@
 # opencode — Configuration
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg) ![Python](https://img.shields.io/badge/python-3.12+-blue.svg) ![Tooling](https://img.shields.io/badge/tooling-uv%20%7C%20ruff-orange.svg) ![opencode](https://img.shields.io/badge/opencode-powered-black.svg) ![Docs](https://img.shields.io/badge/docs-opencode.ai-blueviolet.svg) ![Maintenance](https://img.shields.io/badge/maintenance-active-brightgreen.svg)
+![Python](https://img.shields.io/badge/python-3.12+-blue.svg) ![Tooling](https://img.shields.io/badge/tooling-uv%20%7C%20ruff-orange.svg) ![opencode](https://img.shields.io/badge/opencode-powered-black.svg) ![Docs](https://img.shields.io/badge/docs-opencode.ai-blueviolet.svg) ![Maintenance](https://img.shields.io/badge/maintenance-active-brightgreen.svg)
 
 Personal [opencode](https://opencode.ai) configuration — rules, skills, agents, and behavior guidelines for Python development.
 
@@ -225,6 +225,6 @@ uv run bandit -r src/
 
 ## Maintenance
 
-- **License:** MIT
+- **License:** ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 - **Stack:** `uv`, `ruff`, `pyright`, `pytest`, `mypy`
 - **Tracking:** All config changes versioned via git

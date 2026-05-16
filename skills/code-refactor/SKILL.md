@@ -11,9 +11,7 @@ description: Modernize legacy Python code with best practices, type hints, and e
 
 This skill transforms legacy Python code into modern, maintainable, and efficient implementations following current best practices.
 
-> If `guidelines`, are missing, treat those as informational placeholders and apply your team's conventions directly.
-
-- For comprehensive Python best practices, see `python-rules` skill.
+- see For comprehensive best practices, and code style guidelines: @docs/python-rules.md
 
 ---
 

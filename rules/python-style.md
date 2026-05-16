@@ -250,11 +250,3 @@ Run hooks on all files:
 ```bash
 uv run pre-commit run --all-files
 ```
-
----
-
-## See Also
-
-- `python-testing` skill — Test patterns and coverage thresholds
-- Security scanning with `bandit`, `safety`, and `uv-secure`
-- @templates/\* rule — Project templates for Python projects

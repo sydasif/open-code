@@ -1,3 +1,8 @@
+---
+name: git
+description: Git branch naming conventions and commit message rules
+---
+
 # Git Rules
 
 ## Branch Naming

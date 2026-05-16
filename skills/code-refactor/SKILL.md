@@ -11,7 +11,11 @@ description: Modernize legacy Python code with best practices, type hints, and e
 
 This skill transforms legacy Python code into modern, maintainable, and efficient implementations following current best practices.
 
-- see For comprehensive best practices, and code style guidelines: @docs/python-rules.md
+## Python style
+
+Follow the project's canonical Python style rules defined in `rules/python-style.md`.
+Those rules are always loaded and take precedence. This skill applies them mechanically
+during refactoring — it does not restate them here.
 
 ---
 
@@ -76,17 +80,17 @@ This skill transforms legacy Python code into modern, maintainable, and efficien
 
 ## Quality Assurance
 
-For detailed tool commands, see `AGENTS.md`.
+For detailed tool commands, see the project's `AGENTS.md` or the `code-cleanup` and `code-review` skills.
 
 ### Before Refactoring
 
 Run type checking, linting, and tests to establish baseline:
 
 ```
-mypy <target>
-ruff check <target>
-pytest --tb=short
-pytest --cov=<target> --cov-report=term-missing
+uv run mypy <target>
+uv run ruff check <target>
+uv run pytest --tb=short
+uv run pytest --cov=<target> --cov-report=term-missing
 ```
 
 Record the baseline pass/fail counts. Any test that was already failing before refactoring is not your regression to fix — flag it and leave it.

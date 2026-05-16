@@ -35,6 +35,49 @@ Here's the complete file structure of my customized Opencode Python setup:
 
 This structure serves as a template adaptable to any programming language. Simply replace the language-specific components — rules like `python-style.md`, `python-testing.md`, and the Python toolchain in `opencode.json` — with equivalents for your target language (e.g., `javascript-style.md`, `go-testing.md`, etc.).
 
+## Directory Components Explained
+
+### AGENTS.md
+
+The `AGENTS.md` file defines the core agent guidelines for the Opencode system:
+
+- **Mandate**: Discover → Plan → Execute → Verify
+- **Authority**: Proceed & Notify (refactoring, deps, tests) / Propose & Wait (architecture, APIs, new deps) / Do Not Touch (secrets, CI/CD, destructive ops)
+- **Process**: Surface assumptions → search patterns → read rules → plan (with non-goals + rollback path) → execute one module per pass (skill chain: @cleanup → @refactor → @review)
+- **Always-On Rules**: References `@rules/python-style.md`, `@rules/python-testing.md`, `@rules/git.md`
+- **Required Output**: Discovery Report, Strategic Plan, Assumptions & Risks, Proposed Changes, Skipped Candidates, Verification Pyramid
+- **Halt & Escalate**: Security vulnerabilities, scope exceeding 5 extra files, contradictory requirements, bypassing architecture, destructive ops, subagent conflicts
+
+### agents/ Directory
+
+Contains subagent definitions, each with its own model assignment, permissions, and invocation instructions:
+
+- `research.md` — Deep-dive research using web search and codebase exploration. Read-only agent (`model: deepseek-v4-flash-free`) with access to `ddg-search` and `repomix` skills. Temperature: 0.2. Invoke for documentation lookups, library understanding, and cross-referencing upstream implementations.
+- `cleanup.md` — Codebase cleanup applying YAGNI, DRY, and KISS principles. Edit-capable agent (`model: deepseek-v4-flash-free`) with access to `code-cleanup` skill and ruff/pytest bash permissions. Temperature: 0.1. Invoke to remove dead code, duplicated logic, and over-abstraction.
+- `refactor.md` — Modernizes legacy Python code with best practices, type hints, and efficient patterns. Edit-capable agent (`model: minimax-m2.5-free`) with access to `code-refactor` skill and ruff/mypy/pytest bash permissions. Temperature: 0.3. Invoke after a cleanup pass has pruned dead code.
+- `review.md` — Final-gate review of completed changes. Read-only agent (`model: deepseek-v4-flash-free`) with access to `code-review`, `ddg-search`, and `repomix` skills. Temperature: 0.2. Invoke before submitting a PR to catch errors and verify completeness.
+
+### skills/ Directory
+
+On-demand invokable workflows, each with specialized instructions and bundled scripts:
+
+- `code-cleanup/` — YAGNI/DRY/KISS cleanup workflow. Removes dead code, deduplicates logic, simplifies over-engineered abstractions. Never introduces new abstractions unless they reduce maintenance cost.
+- `code-refactor/` — Legacy Python modernization. Transforms code with f-strings, dataclasses, pathlib, type hints, match statements, and Python 3.10+ idioms. Establishes test baseline before changes.
+- `code-review/` — Final-gate verification using fresh-eyes systematic approach. Checks correctness, public contract preservation, test integrity, and hygiene. Produces a structured report with issues, severity, and recommended actions.
+- `ddg-search/` — Web search via DuckDuckGo MCP. Enables real-time searches, documentation lookups, and cross-referencing upstream implementations.
+- `mcp-builder/` — Guide for creating high-quality MCP (Model Context Protocol) servers using FastMCP (Python) or MCP SDK (TypeScript). Covers tool design, error handling, resource exposure, and testing.
+- `python-testing/` — Testing patterns and best practices. Covers AAA pattern, parametrized tests, property-based testing with hypothesis, test fixtures, error condition testing, and coverage thresholds (business logic ≥95%, APIs ≥90%, models ≥85%).
+- `repomix/` — Codebase packaging tool. Packs directories into AI-friendly formats (XML, Markdown, JSON, Plain) with tree-sitter compression for efficient token usage.
+
+### templates/ Directory
+
+Ready-to-use project scaffolding templates for new Python projects:
+
+- `github-actions-ci.md` — GitHub Actions CI/CD workflow. Runs lint (ruff), type check (mypy), test (pytest with coverage), security scan (bandit, safety, uv-secure) using `astral-sh/setup-uv` with caching.
+- `pre-commit-config.md` — Pre-commit hooks configuration. Integrates ruff (linting + formatting), mypy (type checking), bandit (security), safety (dependency audit), and pytest (test validation).
+- `pyproject-toml.md` — Python project configuration template. Pre-configured with ruff, mypy, pytest, coverage, bandit, and uv-secure tooling. Targets Python 3.10+.
+- `readme-structure.md` — Standard README template with dev setup, testing sections, and contribution guidelines for Python projects using the uv toolchain.
+
 With this structure in mind, let's explore why customizing Opencode is beneficial.
 
 ## Why Customize Opencode for Python?

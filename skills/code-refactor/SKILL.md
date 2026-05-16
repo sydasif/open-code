@@ -13,9 +13,7 @@ This skill transforms legacy Python code into modern, maintainable, and efficien
 
 ## Python style
 
-Follow the project's canonical Python style rules defined in `rules/python-style.md`.
-Those rules are always loaded and take precedence. This skill applies them mechanically
-during refactoring — it does not restate them here.
+Follow the canonical Python style rules defined in @rules/python-style.md.
 
 ---
 

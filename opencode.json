@@ -1,19 +1,14 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "instructions": [
-    "~/.config/opencode/rules/git.md",
-    "~/.config/opencode/rules/python-style.md"
-  ],
+  "instructions": ["~/.config/opencode/rules/*.md"],
   "default_agent": "plan",
   "small_model": "opencode/big-pickle",
   "agent": {
     "build": {
-      "model": "opencode/minimax-m2.5-free",
-      "instructions": ["~/.config/opencode/rules/python-testing.md"]
+      "model": "opencode/minimax-m2.5-free"
     },
     "plan": {
-      "model": "opencode/nemotron-3-super-free",
-      "instructions": ["~/.config/opencode/rules/python-testing.md"]
+      "model": "opencode/nemotron-3-super-free"
     }
   },
   "formatter": {
@@ -77,7 +72,12 @@
       "command": ["web-search-mcp"],
       "enabled": true
     },
-    "nornir": { "type": "local", "command": ["nornir-mcp"], "enabled": true },
+    "nornir": {
+      "type": "local",
+      "command": ["nornir-mcp"],
+      "enabled": true,
+      "timeout": 30000
+    },
     "Bifrost": {
       "type": "remote",
       "url": "http://localhost:8080/mcp",

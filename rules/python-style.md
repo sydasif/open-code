@@ -5,7 +5,7 @@ description: Python toolchain, style, and code review rules (single canonical so
 
 # Python Style & Toolchain
 
-> Single canonical source — merged from the former `python_tools.md` and `skills/code-refactor/docs/python-rules.md`. All agents and skills reference this file. Do not duplicate these rules elsewhere.
+> Single canonical source — for all Python style and toolchain rules
 
 ---
 
@@ -156,4 +156,4 @@ Use `uv`. No direct `pip install`. Use `pyproject.toml`. Pin in `uv.lock`.
 
 ## See Also
 
-- `skills/python-testing/SKILL.md` — Test patterns, coverage thresholds
+- `python-testing` skill — Test patterns, coverage thresholds

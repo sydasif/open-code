@@ -33,12 +33,12 @@ changing anything and verify after each transformation.
 - "Modernize this Python module"
 - "Add type hints to this codebase"
 - "Convert this class to a dataclass"
-- After a `code-cleanup` pass has pruned dead code
+- After a `code-cleanup` skill pass has pruned dead code
 
 ## Tools and workflows
 
 I invoke the `code-refactor` skill as my primary workflow. All Python style
-decisions follow `rules/python-style.md` (the canonical source).
+decisions follow @rules/python-style.md (the canonical source).
 
 ## When I stop
 

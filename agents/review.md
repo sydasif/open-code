@@ -28,7 +28,7 @@ reference, description, severity, and recommended action.
 
 ## When to invoke me
 
-- After any `code-cleanup` or `code-refactor` pass
+- After any `code-cleanup` or `code-refactor` skill pass
 - Before submitting a PR
 - When a task is marked "done" and needs a final check
 

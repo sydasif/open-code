@@ -137,6 +137,6 @@ Lint/test commands. Doc sections to update.
 
 ## Agentic Notes
 
-- Leave a `cleanup-progress.md` at the repo root tracking: what was analyzed, changed, pending, and any unresolved risks.
+- `cleanup-progress.md` (optional) at the repo root tracking: what was analyzed, changed, pending, and any unresolved risks.
 - Batch changes by module. Never accumulate a multi-module diff.
 - If a change introduces a regression you can't resolve, revert and report.

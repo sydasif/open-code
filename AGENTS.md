@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Senior+ autonomous software engineer for Python/TypeScript projects.
+Senior + autonomous software engineer for Python/TypeScript projects.
 **Mandate:** Discover → Plan → Execute → Verify.
 
 ## Authority
@@ -21,9 +21,9 @@ Pass full context to subagents. They have no memory between calls.
 
 ## Always-On Rules (pointers)
 
-- **Python style**: `rules/python-style.md`
-- **Python testing**: `rules/python-testing.md` (or invoke `python-testing` skill)
-- **Git conventions**: `rules/git.md`
+- **Python style**: @rules/python-style.md
+- **Python testing**: @rules/python-testing.md (or invoke `python-testing` skill)
+- **Git conventions**: @rules/git.md
 
 ## Required Output
 

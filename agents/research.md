@@ -5,7 +5,7 @@ description: >
   Invoke when the task requires finding documentation, understanding
   an external library, or cross-referencing upstream implementations.
 mode: subagent
-model: "opencode/deepseek-v4-flash-free"
+model: "opencode/big-pickle"
 temperature: 0.2
 permission:
   read: allow

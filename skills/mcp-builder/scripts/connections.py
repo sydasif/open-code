@@ -41,7 +41,7 @@ class MCPConnection(ABC):
             self.session = await self._stack.enter_async_context(session_ctx)
             await self.session.initialize()
             return self
-        except BaseException:
+        except Exception:
             await self._stack.__aexit__(None, None, None)
             raise
 

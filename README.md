@@ -18,19 +18,15 @@ Here's the complete file structure of my customized Opencode Python setup:
 ├── AGENTS.md                     # Agent instructions
 ├── README.md
 ├── rules/
-│   ├── git.md                    # Git branch naming and commit conventions
 │   ├── python-style.md           # Python toolchain, style, and code rules
-│   ├── python-testing.md         # Testing standards and patterns
-│   └── templates.md              # Project templates reference
-├── skills/
-│   ├── code-cleanup/             # YAGNI/DRY/KISS cleanup workflow
-│   ├── code-refactor/            # Legacy Python modernization
-│   ├── code-review/              # Final-gate review workflow
-│   ├── ddg-search/               # Web search via DuckDuckGo
-│   ├── mcp-builder/              # MCP server creation guide
-│   ├── python-testing/           # Testing patterns and coverage
-│   └── repomix/                  # Codebase packaging tool
-└── templates/                    # Project scaffolding templates
+│   └── python-testing.md         # Testing standards and patterns
+└── skills/
+    ├── code-cleanup/             # YAGNI/DRY/KISS cleanup workflow
+    ├── code-refactor/            # Legacy Python modernization
+    ├── code-review/              # Final-gate review workflow
+    ├── ddg-search/               # Web search via DuckDuckGo
+    ├── mcp-builder/              # MCP server creation guide
+    └── repomix/                  # Codebase packaging tool
 ```
 
 This structure serves as a template adaptable to any programming language. Simply replace the language-specific components — rules like `python-style.md`, `python-testing.md`, and the Python toolchain in `opencode.json` — with equivalents for your target language (e.g., `javascript-style.md`, `go-testing.md`, etc.).
@@ -44,7 +40,7 @@ The `AGENTS.md` file defines the core agent guidelines for the Opencode system:
 - **Mandate**: Discover → Plan → Execute → Verify
 - **Authority**: Proceed & Notify (refactoring, deps, tests) / Propose & Wait (architecture, APIs, new deps) / Do Not Touch (secrets, CI/CD, destructive ops)
 - **Process**: Surface assumptions → search patterns → read rules → plan (with non-goals + rollback path) → execute one module per pass (skill chain: @cleanup → @refactor → @review)
-- **Always-On Rules**: References `@rules/python-style.md`, `@rules/python-testing.md`, `@rules/git.md`
+- **Always-On Rules**: References `@rules/python-style.md`, `@rules/python-testing.md`
 - **Required Output**: Discovery Report, Strategic Plan, Assumptions & Risks, Proposed Changes, Skipped Candidates, Verification Pyramid
 - **Halt & Escalate**: Security vulnerabilities, scope exceeding 5 extra files, contradictory requirements, bypassing architecture, destructive ops, subagent conflicts
 
@@ -66,17 +62,7 @@ On-demand invokable workflows, each with specialized instructions and bundled sc
 - `code-review/` — Final-gate verification using fresh-eyes systematic approach. Checks correctness, public contract preservation, test integrity, and hygiene. Produces a structured report with issues, severity, and recommended actions.
 - `ddg-search/` — Web search via DuckDuckGo MCP. Enables real-time searches, documentation lookups, and cross-referencing upstream implementations.
 - `mcp-builder/` — Guide for creating high-quality MCP (Model Context Protocol) servers using FastMCP (Python) or MCP SDK (TypeScript). Covers tool design, error handling, resource exposure, and testing.
-- `python-testing/` — Testing patterns and best practices. Covers AAA pattern, parametrized tests, property-based testing with hypothesis, test fixtures, error condition testing, and coverage thresholds (business logic ≥95%, APIs ≥90%, models ≥85%).
 - `repomix/` — Codebase packaging tool. Packs directories into AI-friendly formats (XML, Markdown, JSON, Plain) with tree-sitter compression for efficient token usage.
-
-### templates/ Directory
-
-Ready-to-use project scaffolding templates for new Python projects:
-
-- `github-actions-ci.md` — GitHub Actions CI/CD workflow. Runs lint (ruff), type check (mypy), test (pytest with coverage), security scan (bandit, safety, uv-secure) using `astral-sh/setup-uv` with caching.
-- `pre-commit-config.md` — Pre-commit hooks configuration. Integrates ruff (linting + formatting), mypy (type checking), bandit (security), safety (dependency audit), and pytest (test validation).
-- `pyproject-toml.md` — Python project configuration template. Pre-configured with ruff, mypy, pytest, coverage, bandit, and uv-secure tooling. Targets Python 3.10+.
-- `readme-structure.md` — Standard README template with dev setup, testing sections, and contribution guidelines for Python projects using the uv toolchain.
 
 With this structure in mind, let's explore why customizing Opencode is beneficial.
 
@@ -104,13 +90,12 @@ The foundation of my setup is in `opencode.json`. Here are the key sections I've
 {
   "instructions": ["~/.config/opencode/rules/*.md"],
   "default_agent": "plan",
-  "small_model": "opencode/big-pickle",
   "agent": {
     "build": {
       "model": "opencode/minimax-m2.5-free"
     },
     "plan": {
-      "model": "opencode/nemotron-3-super-free"
+      "model": "opencode/qwen3.6-plus-free"
     }
   }
 }
@@ -324,7 +309,7 @@ If you'd like to implement a similar configuration for any programming language,
 2. **Create the rules directory** and add:
    - `[language]-style.md` (e.g., `python-style.md`, `javascript-style.md`, `rust-style.md` — based on my Python style guide above as a template)
    - `[language]-testing.md` (e.g., `python-testing.md`, `go-testing.md` — based on my Python testing standards above as a template)
-   - Other rule files as needed (git.md, templates.md)
+   - Other rule files as needed (e.g., language-specific tooling conventions)
 
 3. **Configure opencode.json** with:
    - Your preferred models

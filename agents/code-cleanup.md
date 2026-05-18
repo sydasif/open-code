@@ -1,5 +1,5 @@
 ---
-name: cleanup
+name: code-cleanup
 description: >
   Codebase cleanup applying YAGNI, DRY, and KISS principles.
   Invoke to remove dead code, duplicated logic, and over-abstraction.

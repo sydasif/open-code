@@ -1,5 +1,5 @@
 ---
-name: review
+name: code-review
 description: >
   Final-gate review of completed changes. Catches errors, verifies
   completeness, and confirms quality standards before submitting.

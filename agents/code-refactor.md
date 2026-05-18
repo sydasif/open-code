@@ -1,5 +1,5 @@
 ---
-name: refactor
+name: code-refactor
 description: >
   Modernize legacy Python code with best practices, type hints,
   and efficient patterns.

@@ -1,19 +1,64 @@
 ---
 name: code-refactor
-description: Modernize legacy Python code with best practices, type hints, and efficient patterns.
+description: >
+  Modernize legacy Python code with best practices, type hints,
+  and efficient patterns. Use after code-cleanup has pruned dead code.
 ---
 
 # Python Refactoring Specialist
 
-> **Prerequisite**: Run the `code-cleanup` skill before this one if the codebase hasn't been pruned recently.
-> This skill modernizes code that _should exist_ — not code that should be deleted.
-> Cleanup first, refactor second.
+> **Prerequisite**: Run the `code-cleanup` skill before this one.
+> This skill modernizes code that _should exist_ — not code that should
+> be deleted. Cleanup first, refactor second.
 
-This skill transforms legacy Python code into modern, maintainable, and efficient implementations following current best practices.
+## Python Version
 
-## Python style
+Before any refactoring, determine the project's minimum Python version:
+
+1. Read `pyproject.toml` (`requires-python`), `setup.cfg`, or
+   `.python-version`
+2. If unknown, infer from CI config or ask the user
+3. Only apply patterns available in that version:
+
+| Version | Available patterns                                               |
+| ------- | ---------------------------------------------------------------- |
+| 3.9     | dataclasses, f-strings, pathlib, walrus operator                 |
+| 3.10    | match statements, `X \| Y` unions, keyword-only dataclass fields |
+| 3.11    | tomllib, `Self` type, exception groups                           |
+| 3.12    | type alias syntax, improved f-string nesting                     |
+
+## Python Style
 
 Follow the canonical Python style rules defined in @rules/python-style.md.
+
+---
+
+## Risk Levels
+
+**Safe — apply directly:**
+
+- f-string conversions
+- pathlib conversions
+- Import organization
+- Adding type hints to internal (non-public) functions
+- Replacing index loops with enumerate/comprehensions
+- Narrowing bare `except` to specific exception types (preserving contract)
+
+**Needs care — confirm before applying:**
+
+- dataclass conversions (see caveats in Scenario 2)
+- Adding keyword-only arguments to existing functions
+- Adding `__slots__` (breaks pickle, dynamic attributes, some inheritance)
+- Type hints on public APIs (exposes types that become hard to change)
+- Exception handling changes that alter the error contract
+
+**Skip — document why:**
+
+- Any change to code with no test coverage
+- Converting public API class constructors (breaks external callers)
+- match statements on simple equality chains (no clarity gain over if/elif)
+- Async refactoring without a clear concurrency model
+- Code that is stable, untested, and about to be replaced
 
 ---
 
@@ -21,86 +66,117 @@ Follow the canonical Python style rules defined in @rules/python-style.md.
 
 ### 1. Assessment
 
-1. Identify legacy patterns in the code
-2. Prioritize refactoring based on impact and risk
-3. Check for existing tests — ensure they exist and pass before refactoring anything
+1. Determine minimum Python version (see above)
+2. Identify legacy patterns in the code
+3. Prioritize refactoring based on impact and risk
+4. Check for existing tests — ensure they exist and pass before refactoring
+   anything. If no tests exist, escalate and skip.
 
 ### 2. Safe Refactoring Steps
 
-1. Run existing tests to establish a baseline
-2. Apply one refactoring pattern at a time
-3. Run tests after each change
-4. Verify functionality remains identical
+1. Create a branch: `git checkout -b refactor/<module>-<pattern>`
+2. Run existing tests to establish a baseline. Record pass/fail counts.
+   Any test already failing is not your regression — flag it and leave it.
+3. Apply one refactoring pattern at a time
+4. Run tests after each change
+5. Review `git diff` before declaring the pass complete
+6. Verify functionality remains identical
 
-### 3. Modernization Checklist
+### 3. If a regression occurs
+
+1. `git checkout -- <module>` to discard changes
+2. Do NOT attempt partial fixes on a broken refactoring
+3. Report the failure — some refactorings are only safe with better
+   test coverage
+
+---
+
+## Modernization Checklist
 
 **String and data handling**
 
 - [ ] All string formatting uses f-strings (replace `%` and `.format()`)
+      **Exception**: logging calls use `%` formatting for lazy evaluation.
+      `logger.debug("Value: %s", val)` — not `f"Value: {val}"`. F-strings
+      construct the string even when the log level is suppressed.
 - [ ] Path operations use `pathlib` (replace `os.path.*`)
-- [ ] Config parsing uses `tomllib` (3.11+) or `tomli` where `configparser` is overkill
+- [ ] Config parsing uses `tomllib` (3.11+) or `tomli` where
+      `configparser` is overkill
 
 **Type system**
 
 - [ ] Function signatures have type hints on inputs and return values
-- [ ] Keyword-only arguments used where callers should not rely on positional order
-- [ ] `TypedDict` or dataclasses used for structured dicts passed between functions
+- [ ] `from __future__ import annotations` used where forward references
+      are needed (3.9–3.11; unnecessary in 3.12+)
+- [ ] Keyword-only arguments used where callers should not rely on
+      positional order
+- [ ] `TypedDict` or dataclasses used for structured dicts passed between
+      functions. Note: TypedDict is static-only — it does not validate at
+      runtime.
 
 **Classes and data structures**
 
 - [ ] Simple attribute-only classes replaced with `@dataclass`
-- [ ] Boilerplate methods (`__init__`, `__repr__`, `__eq__`) removed where dataclass covers them
-- [ ] `__slots__` added to hot-path dataclasses where memory efficiency matters
+      (see Scenario 2 for caveats)
+- [ ] Boilerplate methods (`__init__`, `__repr__`, `__eq__`) removed
+      where dataclass covers them
+- [ ] `__slots__` added to hot-path dataclasses only where memory
+      efficiency matters and pickle/inheritance are not concerns
 
 **Control flow**
 
-- [ ] Long `if/elif` chains over a single variable replaced with `match` statements (Python 3.10+)
+- [ ] `match` statements used where they genuinely improve clarity:
+      structural pattern matching, nested destructuring, or guards.
+      Simple equality chains over a single variable are often clearer
+      as `if/elif` — do not convert those.
 - [ ] Complex lambda functions moved to named functions
-- [ ] Iterations use appropriate patterns: `enumerate`, list/dict/set comprehensions, `zip`
+- [ ] Iterations use appropriate patterns: `enumerate`, comprehensions,
+      `zip`
 
 **Resource and error handling**
 
 - [ ] Context managers handle all file, socket, and connection resources
-- [ ] Exception handling is specific — no bare `except:` or `except Exception:` without re-raise
-- [ ] `print` statements for diagnostics replaced with `logging` calls at appropriate levels
+- [ ] Exception handling is specific — no bare `except:` or
+      `except Exception:` without re-raise. **Preserve the existing error
+      contract** (return-None vs. raise) — changing it is a behavior change,
+      not a refactoring.
+- [ ] `print` statements for diagnostics replaced with `logging` calls
+      at appropriate levels (using lazy `%` formatting)
 
 **Async (if applicable)**
 
-- [ ] `asyncio` patterns are consistent — no mixing of sync blocking calls inside async functions
-- [ ] `async with` and `async for` used where available on async-capable resources
+- [ ] `asyncio` patterns are consistent — no mixing of sync blocking
+      calls inside async functions
+- [ ] `async with` and `async for` used where available on async-capable
+      resources
 
 **Imports**
 
 - [ ] Imports organized in standard groups: stdlib → third-party → local
-- [ ] No unused imports (should already be clear after `code-cleanup` pass)
+- [ ] No unused imports (should already be clear after `code-cleanup`)
 
 ---
 
 ## Quality Assurance
 
-For detailed tool commands, see the project's `AGENTS.md` or the `code-cleanup` and `code-review` skills.
-
 ### Before Refactoring
 
-Run type checking, linting, and tests to establish baseline:
-
-```
+```bash
 uv run mypy <target>
 uv run ruff check <target>
 uv run pytest --tb=short
 uv run pytest --cov=<target> --cov-report=term-missing
 ```
 
-Record the baseline pass/fail counts. Any test that was already failing before refactoring is not your regression to fix — flag it and leave it.
+Record the baseline. Any test already failing is not your regression.
 
 ### After Refactoring
 
-Verify refactored code passes all checks:
-
-- Type checking (no new mypy errors)
-- Linting (no new lint violations)
-- Unit tests (same or better pass rate as baseline)
-- Coverage (no meaningful drop from baseline)
+- Type checking: no new mypy errors
+- Linting: no new ruff violations
+- Unit tests: same or better pass rate as baseline
+- Coverage: no meaningful drop from baseline. If coverage drops,
+  investigate — it may indicate a behavior change.
 
 ---
 
@@ -143,6 +219,17 @@ class DeviceInfo:
     platform: str
 ```
 
+⚠️ **Verify before converting:**
+
+- No code uses identity checks (`is`) on instances — dataclass `__eq__`
+  compares values, not identity. Objects that were unequal may become equal.
+- No subclasses override `__init__` — dataclass generates its own.
+- No code relies on pickling format — dataclass pickle output differs.
+- If immutability is intended, use `@dataclass(frozen=True)`.
+- If the class has complex inheritance, test thoroughly after conversion.
+- If the class is part of a public API, this is a breaking change — skip
+  unless you control all callers.
+
 ### Scenario 3: Migrate to pathlib
 
 ```python
@@ -161,29 +248,24 @@ if config_path.exists():
         ...
 ```
 
-### Scenario 4: Migrate to match statements
+### Scenario 4: Use match statements (only where they improve clarity)
 
 ```python
-# Before
+# Good candidate — structural pattern matching
+match event:
+    case {"type": "connect", "host": host, "port": port}:
+        handle_connect(host, port)
+    case {"type": "disconnect", "reason": reason}:
+        handle_disconnect(reason)
+    case _:
+        handle_unknown(event)
+
+# Bad candidate — simple equality, no clarity gain over if/elif
+# Do NOT convert this:
 if platform == "ios":
     driver = IOSDriver()
 elif platform == "eos":
     driver = EOSDriver()
-elif platform == "nxos":
-    driver = NXOSDriver()
-else:
-    raise ValueError(f"Unknown platform: {platform}")
-
-# After (Python 3.10+)
-match platform:
-    case "ios":
-        driver = IOSDriver()
-    case "eos":
-        driver = EOSDriver()
-    case "nxos":
-        driver = NXOSDriver()
-    case _:
-        raise ValueError(f"Unknown platform: {platform}")
 ```
 
 ### Scenario 5: Replace print with logging
@@ -197,6 +279,7 @@ print(f"ERROR: timeout on {host}")
 import logging
 logger = logging.getLogger(__name__)
 
+# Use lazy % formatting in logging — NOT f-strings
 logger.debug("Connecting to %s", host)
 logger.error("Timeout on %s", host)
 ```
@@ -208,8 +291,7 @@ logger.error("Timeout on %s", host)
 def process_user(user_data):
     name = user_data["name"]
     age = user_data["age"]
-    active = user_data.get("active", False)
-    return f"{name} ({age}) - Active: {active}"
+    return f"{name} ({age})"
 
 # After
 from typing import TypedDict
@@ -222,9 +304,12 @@ class User(TypedDict):
 def process_user(user_data: User) -> str:
     name = user_data["name"]
     age = user_data["age"]
-    active = user_data.get("active", False)
-    return f"{name} ({age}) - Active: {active}"
+    return f"{name} ({age})"
 ```
+
+Note: TypedDict is a **static analysis tool only**. It does not validate
+data at runtime. If runtime validation is needed, use pydantic or a
+validation function.
 
 ### Scenario 7: Convert positional args to keyword-only
 
@@ -234,17 +319,12 @@ def create_user(name, age, active=True, admin=False):
     return {"name": name, "age": age, "active": active, "admin": admin}
 
 # After
-def create_user(name: str, age: int, *, active: bool = True, admin: bool = False):
-    """Create a new user.
-
-    Args:
-        name: User's full name
-        age: User's age
-        active: Whether the user is active
-        admin: Whether the user has admin privileges
-    """
+def create_user(name: str, age: int, *, active: bool = True, admin: bool = False) -> dict:
     return {"name": name, "age": age, "active": active, "admin": admin}
 ```
+
+⚠️ This changes the function's calling convention. Any caller passing
+`active` or `admin` positionally will break. Check all call sites first.
 
 ### Scenario 8: Replace index loops and manual accumulators
 
@@ -272,39 +352,117 @@ total = sum(numbers)
 filtered = [num * 2 for num in numbers if num > 0]
 ```
 
-### Scenario 9: Use specific exceptions with exception chaining
+### Scenario 9: Narrow exception handling (preserve contract)
 
 ```python
-# Before
+# Before — catches everything
 def divide(a, b):
     try:
         result = a / b
     except:
         return None
 
-# After
-def divide(a: float, b: float) -> float:
-    """Divide a by b.
-
-    Args:
-        a: Dividend
-        b: Divisor
-
-    Returns:
-        The result of a / b
-
-    Raises:
-        ZeroDivisionError: If b is zero
-        TypeError: If a or b are not numeric
-    """
+# After — catches only expected errors, SAME contract
+def divide(a: float, b: float) -> float | None:
     try:
         return a / b
-    except ZeroDivisionError as e:
-        raise ZeroDivisionError(f"Cannot divide {a} by zero") from e
-    except TypeError as e:
-        raise TypeError(f"Invalid operand types: {type(a).__name__}, {type(b).__name__}") from e
+    except (ZeroDivisionError, TypeError):
+        return None
+```
+
+⚠️ Changing from return-None to raise-exception is a **behavior change**,
+not a refactoring. Preserve the existing error contract. If you want to
+change it, that's a separate design decision — flag it, don't implement it.
+
+---
+
+## Progress Tracking
+
+`refactor-progress.md` at the repo root. Create on first pass. Update
+after each module.
+
+```markdown
+# Refactor Progress
+
+## Python Version
+
+Minimum: [version determined from pyproject.toml / other]
+
+## Analyzed
+
+- [module]: [date] — [patterns found, risk levels]
+
+## Refactored
+
+- [module]: [patterns applied, tests verified]
+
+## Pending
+
+- [module]: [patterns found but not yet applied, with reasons]
+
+## Skipped
+
+- [module/pattern]: [reason — no tests, public API, etc.]
+
+## Unresolved Risks
+
+- [description of anything uncertain or flagged for design review]
 ```
 
 ---
 
-Use this skill to modernize legacy Python code into clean, maintainable, and efficient implementations using contemporary Python features and best practices — after the codebase has been pruned with `code-cleanup`.
+## Reporting
+
+**Important**: All refactoring tasks must adhere to the global "Required Output" format defined in `CLAUDE.md` (Discovery Report → Strategic Plan → Assumptions & Risks → Proposed Changes → Skipped Candidates → Verification Pyramid). The following skill-specific reports should be integrated into those sections.
+
+### Review mode (before changes)
+
+```markdown
+## Refactoring Assessment
+
+### Pre-flight
+
+- Python version: [3.x]
+- Git status: [clean / uncommitted changes]
+- Branch: [refactor/<module>-<pattern> / in-place]
+- Test baseline: [N passed, M failed, X% coverage]
+- Project overrides: [none / list any]
+
+### Candidates
+
+- [file:line] Pattern → Modern form — safe / needs care / skip
+
+### Safe refactorings
+
+Changes ready to apply.
+
+### Risky refactorings
+
+Changes needing confirmation, with specific caveats.
+
+### Skipped
+
+Items evaluated but not actioned, with reasons.
+
+### Verification plan
+
+Type check / lint / test commands. Coverage comparison.
+```
+
+### After changes
+
+```markdown
+## What changed
+
+[summary scoped to module, listing each pattern applied]
+
+## What was verified
+
+[git diff summary, mypy output, ruff output, test results,
+coverage comparison]
+
+## Residual risks
+
+[skipped items, coverage drops, public API concerns,
+dataclass conversion caveats, changes that need design review]
+```

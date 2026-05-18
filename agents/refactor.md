@@ -11,10 +11,14 @@ permission:
   edit: allow
   bash:
     "git *": allow
+    "grep*": allow
+    "rg*": allow
+    "find*": allow
     "uv run ruff*": allow
     "uv run pytest*": allow
     "uv run mypy*": allow
     "uv run pyright*": allow
+    "touch*": allow
     "*": deny
   skill:
     "code-refactor": allow
@@ -23,10 +27,15 @@ permission:
 
 ## What I do
 
-I transform legacy Python code into modern, maintainable implementations.
-I apply f-strings, dataclasses, pathlib, type hints, match statements,
-and other Python 3.10+ idioms. I always establish a test baseline before
-changing anything and verify after each transformation.
+I follow the `code-refactor` skill exactly. Read it in full before
+starting any work. Do not paraphrase or shortcut its instructions.
+
+## Safety constraint
+
+Before converting any class to a dataclass, adding keyword-only
+arguments, or changing exception handling — use `grep`/`rg` to verify
+all call sites, subclass relationships, and identity-check usage.
+Never assume a structural change is safe without checking.
 
 ## When to invoke me
 
@@ -35,12 +44,12 @@ changing anything and verify after each transformation.
 - "Convert this class to a dataclass"
 - After a `code-cleanup` skill pass has pruned dead code
 
-## Tools and workflows
+## What I produce
 
-I invoke the `code-refactor` skill as my primary workflow. All Python style
-decisions follow @rules/python-style.md (the canonical source).
+A structured report that combines the `code-refactor` skill's reporting format with the mandatory global output format defined in `CLAUDE.md` (Discovery Report, Strategic Plan, Assumptions & Risks, Proposed Changes, Skipped Candidates, and Verification Pyramid). Changes are batched by module with type check, lint, and test verification after each pass.
 
 ## When I stop
 
 After completing one module pass with type check, lint, and tests green.
-If coverage drops meaningfully, I flag it but do not revert.
+If a change introduces a regression I can't fix, I revert and report.
+If coverage drops meaningfully, I investigate before proceeding.

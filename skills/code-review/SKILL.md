@@ -43,7 +43,7 @@ Based on the input provided, determine which type of review to perform:
 - **Task Context**: What task was completed? (cleanup, refactor, feature, fix)
 - **File Identification**: Use the diff to identify which files changed.
 - **Untracked Files**: Use `git status --short` to identify untracked files, then read their full contents.
-- **Patterns**: Read the full file to understand existing patterns, control flow, and error handling.
+- **Patterns**: Read the full file to understand existing patterns, control flow, and error handling. Use the `@explore` subagent to search the codebase for relevant patterns if needed.
 - **Guidelines**: Check for existing style guide or conventions files (`CONVENTIONS.md`, `AGENTS.md`, `.editorconfig`, etc.).
 - **Residual Risks**: Are there residual risk notes from a prior `code-cleanup` or `code-refactor` pass? Review those first.
 - **Scope**: What is the stated scope? Flag anything in the diff that falls outside it.
@@ -106,6 +106,10 @@ Work through this checklist against the actual diff, not from memory.
 - [ ] New helpers or changed shared utilities have test coverage
 - [ ] Coverage did not meaningfully drop from baseline
 
+> **Note**: Test execution requires bash access that this agent does not have by default.
+> If test results are not available in the diff context (e.g. CI output, prior run logs),
+> mark this section as **unverified** rather than assumed-pass.
+
 **Dead code and hygiene**
 
 - [ ] No new unused imports were introduced
@@ -142,9 +146,9 @@ Answer each question based on evidence in the code, not intuition:
 **Be certain.** If you're going to call something a bug, you need to be confident it actually is one.
 
 - Only review the changes — do not review pre-existing code that wasn't modified.
-- Don't flag something as a bug if you're unsure — investigate first.
+- Don't flag something as a bug if you're unsure — investigate first. Use `@explore` to search for context.
 - Don't invent hypothetical problems — if an edge case matters, explain the realistic scenario where it breaks.
-- If you need more context to be sure, use the tools below to get it.
+- If you need to verify correct library/API usage, use the `exa-code-context` skill.
 
 **Don't be a zealot about style.**
 
@@ -157,11 +161,11 @@ Answer each question based on evidence in the code, not intuition:
 
 ## Tools
 
-Use these to inform your review:
+Use these to inform your review — in order of preference:
 
-- **Explore agent** — Find how existing code handles similar problems. Check patterns, conventions, and prior art before claiming something doesn't fit.
-- **Exa Code Context** — Verify correct usage of libraries/APIs before flagging something as wrong.
-- **Web Search** — Research best practices if you're unsure about a pattern.
+- **`@explore` subagent** — Find how existing code handles similar problems. Check patterns, conventions, and prior art before claiming something doesn't fit.
+- **`exa-code-context` skill** — Verify correct usage of libraries/APIs before flagging something as wrong.
+- **`ddg-search` skill** — Research best practices if you're unsure about a pattern.
 
 _If you're uncertain about something and can't verify it with these tools, say "I'm not sure about X" rather than flagging it as a definite issue._
 
@@ -177,14 +181,14 @@ Always produce a structured review report — do not summarize in prose only.
 ### Orientation
 
 - Task type: [cleanup / refactor / feature / fix / other]
-- Files changed: [count and list or reference to git diff]
+  -L Files changed: [count and list or reference to git diff]
 - Prior pass residual risks reviewed: [yes / no / none present]
 
 ### Checklist Results
 
 - Correctness: [pass / issues found]
 - Public contracts: [pass / issues found]
-- Tests: [pass / issues found]
+- Tests: [pass / issues found / unverified — no bash access]
 - Dead code and hygiene: [pass / issues found]
 - Documentation: [pass / issues found]
 - Security flags: [none / list any]
@@ -223,6 +227,7 @@ For each issue:
 ## Notes for Agentic Operation
 
 - This skill **does not make changes**. If issues are found, report them. Do not fix them inline during review — that conflates review with implementation and makes the diff harder to reason about.
-- If a blocking issue is found, stop and surface it before proceeding with any further work.
+- Always produce the **full report** before stopping. If a blocking issue is found, mark the verdict as **Needs fixes** and surface it prominently — do not truncate the report.
 - If the review uncovers scope drift (the diff contains changes outside what was asked), flag it explicitly rather than silently accepting it.
 - Security flags are always reported, even if they appear minor. Do not evaluate severity yourself — surface them for the user.
+- If the input type is PR number and `gh` commands fail, report that PR review is unavailable and fall back to reviewing any locally staged/unstaged changes instead.

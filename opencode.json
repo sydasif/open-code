@@ -76,17 +76,6 @@
       "command": ["nornir-mcp"],
       "enabled": true,
       "timeout": 30000
-    },
-    "Bifrost": {
-      "type": "remote",
-      "url": "http://localhost:8080/mcp",
-      "enabled": true
-    },
-    "repomix": {
-      "type": "local",
-      "command": ["npx", "-y", "repomix", "--mcp"],
-      "enabled": true,
-      "timeout": 30000
     }
   },
   "lsp": {

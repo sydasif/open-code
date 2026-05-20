@@ -1,6 +1,5 @@
 ---
 name: security-researcher
-model: "opencode/qwen3.6-plus-free"
 mode: subagent
 temperature: 0.2
 description: >

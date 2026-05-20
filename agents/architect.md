@@ -1,6 +1,5 @@
 ---
 name: architect
-model: "opencode/qwen3.6-plus-free"
 mode: primary
 temperature: 0.1
 description: >

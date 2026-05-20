@@ -93,12 +93,7 @@
       "models": {
         "gemini/gemma-4-31b-it": { "name": "Gemma-4-31b" },
         "gemini/gemma-4-26b-a4b-it": { "name": "Gemma-4-26b" },
-        "gemini/gemini-3.1-flash-lite": { "name": "Gemini-3.1-flash" },
-        "mistral/mistral-small-2603": { "name": "Mistral-small" },
-        "mistral/mistral-medium-3-5": { "name": "Mistral-medium" },
-        "mistral/mistral-large-2512": { "name": "Mistral-large" },
-        "mistral/ministral-14b-2512": { "name": "Ministral-14b" },
-        "mistral/devstral-2512": { "name": "Devstral" }
+        "gemini/gemini-3.1-flash-lite": { "name": "Gemini-3.1-flash" }
       }
     }
   }

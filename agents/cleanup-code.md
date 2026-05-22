@@ -1,5 +1,5 @@
 ---
-name: code-cleanup
+name: cleanup-code
 description: >
   Codebase cleanup applying YAGNI, DRY, and KISS principles.
   Invoke to remove dead code, duplicated logic, and over-abstraction.
@@ -20,13 +20,13 @@ permission:
     "touch*": allow
     "*": deny
   skill:
-    "code-cleanup": allow
+    "cleanup-code": allow
     "*": deny
 ---
 
 ## What I do
 
-I follow the `code-cleanup` skill exactly. Read it in full before
+I follow the `cleanup-code` skill exactly. Read it in full before
 starting any work. Do not paraphrase or shortcut its instructions.
 
 ## Safety constraint
@@ -41,7 +41,7 @@ does not mean zero usages.
 - "Clean up this module"
 - "Remove dead code from this file"
 - "Find and remove unused imports"
-- Before a `code-refactor` pass to prune the codebase first
+- Before a `refactor-code` pass to prune the codebase first
 
 ## What I produce
 

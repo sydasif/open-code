@@ -1,13 +1,13 @@
 ---
-name: code-refactor
+name: refactor-code
 description: >
   Modernize legacy Python code with best practices, type hints,
-  and efficient patterns. Use after code-cleanup has pruned dead code.
+  and efficient patterns. Use after cleanup-code has pruned dead code.
 ---
 
 # Python Refactoring Specialist
 
-> **Prerequisite**: Run the `code-cleanup` skill before this one.
+> **Prerequisite**: Run the `cleanup-code` skill before this one.
 > This skill modernizes code that _should exist_ — not code that should
 > be deleted. Cleanup first, refactor second.
 
@@ -153,7 +153,7 @@ Follow the canonical Python style rules defined in @rules/python-style.md.
 **Imports**
 
 - [ ] Imports organized in standard groups: stdlib → third-party → local
-- [ ] No unused imports (should already be clear after `code-cleanup`)
+- [ ] No unused imports (should already be clear after `cleanup-code`)
 
 ---
 

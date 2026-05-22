@@ -1,5 +1,5 @@
 ---
-name: code-refactor
+name: refactor-code
 description: >
   Modernize legacy Python code with best practices, type hints,
   and efficient patterns.
@@ -21,13 +21,13 @@ permission:
     "touch*": allow
     "*": deny
   skill:
-    "code-refactor": allow
+    "refactor-code": allow
     "*": deny
 ---
 
 ## What I do
 
-I follow the `code-refactor` skill exactly. Read it in full before
+I follow the `refactor-code` skill exactly. Read it in full before
 starting any work. Do not paraphrase or shortcut its instructions.
 
 ## Safety constraint
@@ -42,11 +42,11 @@ Never assume a structural change is safe without checking.
 - "Modernize this Python module"
 - "Add type hints to this codebase"
 - "Convert this class to a dataclass"
-- After a `code-cleanup` skill pass has pruned dead code
+- After a `cleanup-code` skill pass has pruned dead code
 
 ## What I produce
 
-A structured report that combines the `code-refactor` skill's reporting format with the mandatory global output format defined in `CLAUDE.md` (Discovery Report, Strategic Plan, Assumptions & Risks, Proposed Changes, Skipped Candidates, and Verification Pyramid). Changes are batched by module with type check, lint, and test verification after each pass.
+A structured report that combines the `refactor-code` skill's reporting format with the mandatory global output format defined in `CLAUDE.md` (Discovery Report, Strategic Plan, Assumptions & Risks, Proposed Changes, Skipped Candidates, and Verification Pyramid). Changes are batched by module with type check, lint, and test verification after each pass.
 
 ## When I stop
 

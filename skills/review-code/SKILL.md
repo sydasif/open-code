@@ -1,11 +1,11 @@
 ---
-name: code-review
-description: Final-gate review of completed changes using a systematic, fresh-eyes verification approach. Run after code-cleanup and/or code-refactor passes to catch errors, verify completeness, and confirm quality standards before submitting work.
+name: review-code
+description: Final-gate review of completed changes using a systematic, fresh-eyes verification approach. Run after cleanup-code and/or refactor-code passes to catch errors, verify completeness, and confirm quality standards before submitting work.
 ---
 
 # Code Review — Final Gate
 
-> **When to use**: After completing a `code-cleanup`, `code-refactor`, or any significant implementation task.
+> **When to use**: After completing a `cleanup-code`, `refactor-code`, or any significant implementation task.
 > This skill is the last check before work is considered done. It does not make changes — it surfaces problems.
 
 ---
@@ -45,7 +45,7 @@ Based on the input provided, determine which type of review to perform:
 - **Untracked Files**: Use `git status --short` to identify untracked files, then read their full contents.
 - **Patterns**: Read the full file to understand existing patterns, control flow, and error handling. Use the `@explore` subagent to search the codebase for relevant patterns if needed.
 - **Guidelines**: Check for existing style guide or conventions files (`CONVENTIONS.md`, `AGENTS.md`, `.editorconfig`, etc.).
-- **Residual Risks**: Are there residual risk notes from a prior `code-cleanup` or `code-refactor` pass? Review those first.
+- **Residual Risks**: Are there residual risk notes from a prior `cleanup-code` or `refactor-code` pass? Review those first.
 - **Scope**: What is the stated scope? Flag anything in the diff that falls outside it.
 
 ### 2. Structural Verification
@@ -120,7 +120,7 @@ Work through this checklist against the actual diff, not from memory.
 
 - [ ] Inline comments reflect current behavior, not prior behavior
 - [ ] Any updated public APIs are reflected in docstrings
-- [ ] Cross-skill references (`code-cleanup`, `code-refactor` notes) are resolved or explicitly deferred
+- [ ] Cross-skill references (`cleanup-code`, `refactor-code` notes) are resolved or explicitly deferred
 
 **Security and safety (flag, do not fix)**
 

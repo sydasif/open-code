@@ -1,5 +1,5 @@
 ---
-name: code-review
+name: review-code
 description: >
   Final-gate review of completed changes. Catches errors, verifies
   completeness, and confirms quality standards before submitting.
@@ -22,7 +22,7 @@ permission:
     "explore": allow
     "*": deny
   skill:
-    "code-review": allow
+    "review-code": allow
     "ddg-search": allow
     "exa-code-context": allow
     "repomix": allow
@@ -38,7 +38,7 @@ reference, description, severity, and recommended action.
 
 ## When to invoke me
 
-- After any `code-cleanup` or `code-refactor` skill pass
+- After any `cleanup-code` or `refactor-code` skill pass
 - Before submitting a PR
 - When a task is marked "done" and needs a final check
 

@@ -1,5 +1,5 @@
 ---
-name: code-cleanup
+name: cleanup-code
 description: >
   Codebase cleanup workflow applying YAGNI, DRY, and KISS principles.
   Use when asked to review, simplify, refactor, or remove dead/leftover

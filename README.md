@@ -18,9 +18,9 @@ A customized Opencode environment optimized for professional Python development.
 │   ├── refactor.md
 │   └── review.md
 └── skills/                       # Specialized workflows
-    ├── code-cleanup/
-    ├── code-refactor/
-    ├── code-review/
+    ├── cleanup-code/
+    ├── refactor-code/
+    ├── review-code/
     ├── ddg-search/
     ├── mcp-builder/
     └── repomix/

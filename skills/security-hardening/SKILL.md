@@ -11,18 +11,18 @@ This skill provides comprehensive security guidance based on OWASP standards and
 
 ### OWASP Top 10 for Agentic Applications (2026)
 
-| ID | Risk | Quick Check |
-|----|------|-------------|
-| ASI01 | Goal Hijack | Does code process untrusted content from external sources? |
-| ASI02 | Tool Misuse | Are tool permissions scoped to minimum required? |
-| ASI03 | Identity Abuse | Are credentials properly scoped and short-lived? |
-| ASI04 | Supply Chain | Are dependencies pinned and verified? |
-| ASI05 | Code Execution | Is generated code executed without validation? |
-| ASI06 | Memory Poisoning | Is RAG/chroma data filtered before ingestion? |
-| ASI07 | Inter-Agent Comm | Are messages authenticated and encrypted? |
-| ASI08 | Cascading Failures | Do failures properly isolate and not propagate? |
+| ID    | Risk               | Quick Check                                                    |
+| ----- | ------------------ | -------------------------------------------------------------- |
+| ASI01 | Goal Hijack        | Does code process untrusted content from external sources?     |
+| ASI02 | Tool Misuse        | Are tool permissions scoped to minimum required?               |
+| ASI03 | Identity Abuse     | Are credentials properly scoped and short-lived?               |
+| ASI04 | Supply Chain       | Are dependencies pinned and verified?                          |
+| ASI05 | Code Execution     | Is generated code executed without validation?                 |
+| ASI06 | Memory Poisoning   | Is RAG/chroma data filtered before ingestion?                  |
+| ASI07 | Inter-Agent Comm   | Are messages authenticated and encrypted?                      |
+| ASI08 | Cascading Failures | Do failures properly isolate and not propagate?                |
 | ASI09 | Trust Exploitation | Does output contain persuasive language for sensitive actions? |
-| ASI10 | Rogue Agents | Is there a kill switch for compromised agents? |
+| ASI10 | Rogue Agents       | Is there a kill switch for compromised agents?                 |
 
 ## Language-Specific Patterns
 
@@ -71,15 +71,15 @@ interface UserInput {
 }
 
 function validateInput(input: unknown): UserInput {
-  if (!input || typeof input !== 'object') {
-    throw new Error('Invalid input');
+  if (!input || typeof input !== "object") {
+    throw new Error("Invalid input");
   }
   const { email, age } = input as Record<string, unknown>;
-  if (typeof email !== 'string' || !email.includes('@')) {
-    throw new Error('Invalid email');
+  if (typeof email !== "string" || !email.includes("@")) {
+    throw new Error("Invalid email");
   }
-  if (typeof age !== 'number' || age < 0) {
-    throw new Error('Invalid age');
+  if (typeof age !== "number" || age < 0) {
+    throw new Error("Invalid age");
   }
   return { email, age };
 }

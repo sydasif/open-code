@@ -5,7 +5,6 @@ description: >
   completeness, and confirms quality standards before submitting.
   Accepts: no args (uncommitted changes), commit hash, branch name, or PR number.
 mode: subagent
-model: "opencode/deepseek-v4-flash-free"
 temperature: 0.2
 permission:
   edit: deny

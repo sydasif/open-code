@@ -4,7 +4,6 @@ description: >
   Codebase cleanup applying YAGNI, DRY, and KISS principles.
   Invoke to remove dead code, duplicated logic, and over-abstraction.
 mode: subagent
-model: "opencode/deepseek-v4-flash-free"
 temperature: 0.1
 permission:
   read: allow

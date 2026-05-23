@@ -1,11 +1,10 @@
 ---
-name: research
+name: research-code
 description: >
   Deep-dive research using web search and codebase exploration.
   Invoke when the task requires finding documentation, understanding
   an external library, or cross-referencing upstream implementations.
 mode: subagent
-model: "opencode/big-pickle"
 temperature: 0.2
 permission:
   read: allow

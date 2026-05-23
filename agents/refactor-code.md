@@ -4,7 +4,6 @@ description: >
   Modernize legacy Python code with best practices, type hints,
   and efficient patterns.
 mode: subagent
-model: "opencode/minimax-m2.5-free"
 temperature: 0.3
 permission:
   read: allow

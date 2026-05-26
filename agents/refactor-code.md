@@ -24,10 +24,16 @@ permission:
     "*": deny
 ---
 
+# Docs
+
+- ~/.claude/docs/index.md
+
 ## What I do
 
 I follow the `refactor-code` skill exactly. Read it in full before
 starting any work. Do not paraphrase or shortcut its instructions.
+
+After I complete successfully, invoke the `security-audit` agent.
 
 ## Safety constraint
 
@@ -45,7 +51,7 @@ Never assume a structural change is safe without checking.
 
 ## What I produce
 
-A structured report that combines the `refactor-code` skill's reporting format with the mandatory global output format defined in `CLAUDE.md` (Discovery Report, Strategic Plan, Assumptions & Risks, Proposed Changes, Skipped Candidates, and Verification Pyramid). Changes are batched by module with type check, lint, and test verification after each pass.
+A report combining the `refactor-code` skill format with the `CLAUDE.md` global output format (Discovery Report, Strategic Plan, Assumptions & Risks, Proposed Changes, Skipped Candidates, and Verification Pyramid). I batch changes by module with type check, lint, and test verification after each pass.
 
 ## When I stop
 

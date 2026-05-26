@@ -2,14 +2,6 @@
   "$schema": "https://opencode.ai/config.json",
   "instructions": ["~/.config/opencode/rules/*.md"],
   "default_agent": "plan",
-  "agent": {
-    "build": {
-      "model": "opencode/minimax-m2.5-free"
-    },
-    "plan": {
-      "model": "opencode/qwen3.6-plus-free"
-    }
-  },
   "formatter": {
     "prettier": {
       "command": ["npx", "prettier", "--write", "$FILE"],

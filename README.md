@@ -1,62 +1,43 @@
-# Opencode Python Setup
+# OpenCode Configuration
 
-A customized Opencode environment optimized for professional Python development.
+A configuration for [OpenCode](https://opencode.ai) — an AI-powered coding assistant — with structured agent capabilities, LSP integration, and secure tool permissions.
 
-## Structure
+---
 
-```
-~/.config/opencode/
-├── opencode.json                 # Main configuration
-├── AGENTS.md                     # Core agent guidelines
-├── README.md
-├── rules/                        # Language-specific rules
-│   ├── python-style.md
-│   └── python-testing.md
-├── agents/                       # Subagent definitions
-│   ├── research.md
-│   ├── cleanup.md
-│   ├── refactor.md
-│   └── review.md
-└── skills/                       # Specialized workflows
-    ├── cleanup-code/
-    ├── refactor-code/
-    ├── review-code/
-    ├── ddg-search/
-    ├── mcp-builder/
-    └── repomix/
+## Features
+
+- **Agent system**: Specialized sub-agents for cleanup, refactor, and review
+- **External docs**: Instructions loaded from `~/.claude/docs/index.md` via `opencode.json`
+- **Skills pipeline**: Symlinked from `~/.claude/skills` — cleanup → refactor → review
+- **LSP integration**: Pyright (Python), YAML, and Bash language servers
+- **MCP servers**: Web search (`ddg_search`) and network automation (`nornir`)
+- **Auto-formatting**: `ruff` for Python, `prettier` for JS/TS/JSON/Markdown/YAML
+- **Security-first permissions**: Granular allow/deny/ask rules for bash, edit, and read operations
+
+---
+
+## Quick Start
+
+```bash
+git clone <this-repo> ~/.config/opencode
 ```
 
-## Core Components
+---
 
-### Agents
+## Key Files
 
-Defined in `agents/`, these agents handle specialized tasks:
+| Path              | Purpose                                                                          |
+| ----------------- | -------------------------------------------------------------------------------- |
+| `opencode.json`   | Main config — providers, LSP, MCP, permissions, formatters                       |
+| `AGENTS.md`       | Base instructions — discovery, planning, execution, security                     |
+| `agents/*.md`     | Specialized sub-agent definitions                                                |
+| `skills/`         | Symlink to `~/.claude/skills` — reusable skill capabilities                      |
+| `~/.claude/docs/` | External docs referenced by `opencode.json` — Python standards, testing, tooling |
 
-- **Research**: Deep-dive exploration and documentation lookup.
-- **Cleanup**: Applying YAGNI, DRY, and KISS principles.
-- **Refactor**: Modernizing legacy Python code.
-- **Review**: Final-gate verification of completed changes.
+---
 
-### Skills
+## Requirements
 
-On-demand invokable workflows in `skills/` that provide specialized instructions and bundled scripts.
-
-### Rules
-
-Located in `rules/`, providing strict guidelines for Python style, toolchain usage, and testing standards.
-
-## Configuration
-
-The setup is driven by `opencode.json`, which manages:
-
-- **Model Assignments**: Different models for different agent roles.
-- **Toolchain Integration**: Configured formatters (e.g., `uv` with `ruff`).
-- **Permission System**: Granular control over file access and bash commands.
-
-## Adaptation
-
-To adapt this setup for another language:
-
-1. Replace `rules/*.md` with language-specific style and testing guides.
-2. Update `skills/` with relevant workflows.
-3. Configure `opencode.json` with the appropriate toolchain and models.
+- [OpenCode](https://opencode.ai) — the agent runtime
+- Node.js (for formatters) — `node` in `$PATH`
+- Optional: `uv`, `ruff`, `prettier` — used by formatters and skills

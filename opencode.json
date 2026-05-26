@@ -1,7 +1,10 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "instructions": ["~/.config/opencode/rules/*.md"],
+  "instructions": ["~/.claude/docs/index.md"],
   "default_agent": "plan",
+  "skills": {
+    "paths": ["~/.claude/skills"]
+  },
   "formatter": {
     "prettier": {
       "command": ["npx", "prettier", "--write", "$FILE"],
@@ -55,6 +58,10 @@
     },
     "skill": {
       "*": "allow"
+    },
+    "external_directory": {
+      "~/.claude/**": "allow",
+      "*": "ask"
     }
   },
   "mcp": {

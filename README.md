@@ -9,8 +9,8 @@ A configuration for [OpenCode](https://opencode.ai) — an AI-powered coding ass
 - **Agent system**: Specialized sub-agents for cleanup, refactor, and review
 - **External docs**: Instructions loaded from `~/.claude/docs/index.md` via `opencode.json`
 - **Skills pipeline**: Symlinked from `~/.claude/skills` — cleanup → refactor → review
-- **LSP integration**: Pyright (Python), YAML, and Bash language servers
-- **MCP servers**: Web search (`ddg_search`) and network automation (`nornir`)
+- **LSP integration**: Pyright (Python), TypeScript, YAML, and Bash language servers
+- **MCP servers**: Web search (`ddg_search`), network automation (`nornir`), docs lookup (`context7`), codebase context (`repomix`)
 - **Auto-formatting**: `ruff` for Python, `prettier` for JS/TS/JSON/Markdown/YAML
 - **Security-first permissions**: Deny rules for secret files (`.env`, `.pem`, `.key`, `.secret`, `*credentials*`)
 

@@ -2,9 +2,6 @@
   "$schema": "https://opencode.ai/config.json",
   "instructions": ["~/.claude/docs/index.md"],
   "default_agent": "plan",
-  "skills": {
-    "paths": ["~/.claude/skills"]
-  },
   "formatter": {
     "prettier": {
       "command": ["npx", "prettier", "--write", "$FILE"],
@@ -23,8 +20,7 @@
       "*.pem": "deny",
       "*.key": "deny",
       "*.secret": "deny",
-      "*credentials*": "deny",
-      "*.env.example": "allow"
+      "*credentials*": "deny"
     },
     "edit": {
       "*": "allow",
@@ -33,35 +29,7 @@
       "*.pem": "deny",
       "*.key": "deny",
       "*.secret": "deny",
-      "*credentials*": "deny",
-      "*.env.example": "allow"
-    },
-    "bash": {
-      "git *": "allow",
-      "uv run ruff*": "allow",
-      "uv run pytest*": "allow",
-      "uv run mypy*": "allow",
-      "uv run pyright*": "allow",
-      "uv run safety*": "allow",
-      "uv run bandit*": "allow",
-      "ls *": "allow",
-      "wc *": "allow",
-      "grep *": "allow",
-      "rg *": "allow",
-      "find *": "allow",
-      "curl *": "ask",
-      "wget *": "ask",
-      "docker *": "ask",
-      "sudo *": "deny",
-      "rm -rf *": "deny",
-      "*": "ask"
-    },
-    "skill": {
-      "*": "allow"
-    },
-    "external_directory": {
-      "~/.claude/**": "allow",
-      "*": "ask"
+      "*credentials*": "deny"
     }
   },
   "mcp": {
@@ -88,7 +56,7 @@
     "bifrost": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Bifrost",
-      "options": { "baseURL": "http://localhost:8080/v1" },
+      "options": { "baseURL": "http://localhost:4000" },
       "models": {
         "gemini/gemma-4-31b-it": { "name": "Gemma-4-31b" },
         "gemini/gemma-4-26b-a4b-it": { "name": "Gemma-4-26b" },

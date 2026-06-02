@@ -57,10 +57,19 @@
   },
   "lsp": {
     "pyright": {
-      "command": ["pyright-langserver", "--stdio", "--no-implicit-any"]
+      "command": ["pyright-langserver", "--stdio"]
     },
-    "yaml-ls": { "command": ["yaml-language-server", "--stdio"] },
-    "bash": { "command": ["bash-language-server", "start"] },
+    "ruff": {
+      "command": ["ruff", "server"],
+      "extensions": [".py", ".pyi"],
+      "initialization": {
+        "settings": {
+          "exclude": ["*"]
+        }
+      }
+    },
+    "yaml-ls": { "command": ["npx", "-y", "yaml-language-server", "--stdio"] },
+    "bash": { "command": ["npx", "-y", "bash-language-server", "start"] },
     "typescript": { "command": ["typescript-language-server", "--stdio"] }
   },
   "provider": {

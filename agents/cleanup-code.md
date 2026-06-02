@@ -5,22 +5,8 @@ description: >
   Invoke to remove dead code, duplicated logic, and over-abstraction.
 mode: subagent
 temperature: 0.1
-permission:
-  read: allow
-  edit: allow
-  bash:
-    "git *": allow
-    "uv run ruff*": allow
-    "uv run pytest*": allow
-    "uv run coverage*": allow
-    "grep*": allow
-    "rg*": allow
-    "find*": allow
-    "touch*": allow
-    "*": deny
   skill:
     "cleanup-code": allow
-    "*": deny
 ---
 
 # Docs

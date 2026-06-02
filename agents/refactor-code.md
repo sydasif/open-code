@@ -5,23 +5,8 @@ description: >
   and efficient patterns.
 mode: subagent
 temperature: 0.3
-permission:
-  read: allow
-  edit: allow
-  bash:
-    "git *": allow
-    "grep*": allow
-    "rg*": allow
-    "find*": allow
-    "uv run ruff*": allow
-    "uv run pytest*": allow
-    "uv run mypy*": allow
-    "uv run pyright*": allow
-    "touch*": allow
-    "*": deny
   skill:
     "refactor-code": allow
-    "*": deny
 ---
 
 # Docs

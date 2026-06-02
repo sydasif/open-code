@@ -5,27 +5,10 @@ description: >
   completeness, and confirms quality standards before submitting.
   Accepts: no args (uncommitted changes), commit hash, branch name, or PR number.
 mode: subagent
-temperature: 0.2
-permission:
-  edit: deny
-  bash:
-    "*": deny
-    "git diff*": allow
-    "git diff --cached*": allow
-    "git status*": allow
-    "git show*": allow
-    "git log*": allow
-    "gh pr view*": allow
-    "gh pr diff*": allow
-  task:
-    "explore": allow
-    "*": deny
   skill:
     "review-code": allow
     "ddg-search": allow
-    "exa-code-context": allow
     "repomix": allow
-    "*": deny
 ---
 
 # Docs

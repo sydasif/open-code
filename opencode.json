@@ -43,6 +43,16 @@
       "command": ["nornir-mcp"],
       "enabled": true,
       "timeout": 30000
+    },
+    "context7": {
+      "type": "local",
+      "command": ["npx", "-y", "@upstash/context7-mcp"],
+      "enabled": true
+    },
+    "repomix": {
+      "type": "local",
+      "command": ["npx", "-y", "repomix@latest", "--mcp"],
+      "enabled": true
     }
   },
   "lsp": {
@@ -50,7 +60,8 @@
       "command": ["pyright-langserver", "--stdio", "--no-implicit-any"]
     },
     "yaml-ls": { "command": ["yaml-language-server", "--stdio"] },
-    "bash": { "command": ["bash-language-server", "start"] }
+    "bash": { "command": ["bash-language-server", "start"] },
+    "typescript": { "command": ["typescript-language-server", "--stdio"] }
   },
   "provider": {
     "bifrost": {

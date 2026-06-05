@@ -1,12 +1,12 @@
 ---
-name: refactor-code
+name: refactor
 description: >
   Modernize legacy Python code with best practices, type hints,
   and efficient patterns.
 mode: subagent
 temperature: 0.3
-  skill:
-    "refactor-code": allow
+skill:
+  - refactor-code
 ---
 
 # Docs

@@ -5,10 +5,8 @@ description: >
   completeness, and confirms quality standards before submitting.
   Accepts: no args (uncommitted changes), commit hash, branch name, or PR number.
 mode: subagent
-  skill:
-    "review-code": allow
-    "ddg-search": allow
-    "repomix": allow
+skill:
+  - review-code
 ---
 
 # Docs

@@ -36,13 +36,10 @@
     "ddg_search": {
       "type": "local",
       "command": ["web-search-mcp"],
-      "enabled": true
-    },
-    "nornir": {
-      "type": "local",
-      "command": ["nornir-mcp"],
       "enabled": true,
-      "timeout": 30000
+      "environment": {
+        "SEARCH_MCP_GROQ_API_KEY": "{env:SEARCH_MCP_GROQ_API_KEY}"
+      }
     },
     "context7": {
       "type": "local",

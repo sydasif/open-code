@@ -6,9 +6,7 @@ description: >
 mode: subagent
 temperature: 0.1
 skill:
-  - yagni-code
-  - dry-code
-  - kiss-code
+  - cleanup-code
 ---
 
 # Docs

@@ -39,8 +39,11 @@
       "enabled": true
     },
     "context7": {
-      "type": "local",
-      "command": ["npx", "-y", "@upstash/context7-mcp"],
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+      },
       "enabled": true
     },
     "repomix": {

@@ -2,7 +2,6 @@
   "$schema": "https://opencode.ai/config.json",
   "instructions": ["~/.claude/docs/index.md"],
   "default_agent": "plan",
-  "small_model": "bifrost/gemini-3.1-flash-lite",
   "formatter": {
     "prettier": {
       "command": ["npx", "prettier", "--write", "$FILE"],
@@ -37,10 +36,7 @@
     "ddg_search": {
       "type": "local",
       "command": ["web-search-mcp"],
-      "enabled": true,
-      "environment": {
-        "SEARCH_MCP_GROQ_API_KEY": "{$GROQ_API_KEY}"
-      }
+      "enabled": true
     },
     "context7": {
       "type": "local",
@@ -64,18 +60,6 @@
     "yaml-ls": { "command": ["npx", "-y", "yaml-language-server", "--stdio"] },
     "bash": { "command": ["npx", "-y", "bash-language-server", "start"] },
     "typescript": { "command": ["typescript-language-server", "--stdio"] }
-  },
-  "provider": {
-    "bifrost": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Litellm",
-      "options": { "baseURL": "http://localhost:4000" },
-      "models": {
-        "gemma-4-31b-it": { "name": "Gemma-4-31b" },
-        "gemma-4-26b-a4b-it": { "name": "Gemma-4-26b" },
-        "gemini-3.1-flash-lite": { "name": "Gemini-3.1-flash" }
-      }
-    }
   },
   "compaction": {
     "auto": true,

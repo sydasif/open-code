@@ -38,7 +38,7 @@
       "command": ["web-search-mcp"],
       "enabled": true,
       "environment": {
-        "SEARCH_MCP_GROQ_API_KEY": "{env:SEARCH_MCP_GROQ_API_KEY}"
+        "SEARCH_MCP_GROQ_API_KEY": "{$GROQ_API_KEY}"
       }
     },
     "context7": {
@@ -58,12 +58,7 @@
     },
     "ruff": {
       "command": ["ruff", "server"],
-      "extensions": [".py", ".pyi"],
-      "initialization": {
-        "settings": {
-          "exclude": ["*"]
-        }
-      }
+      "extensions": [".py", ".pyi"]
     },
     "yaml-ls": { "command": ["npx", "-y", "yaml-language-server", "--stdio"] },
     "bash": { "command": ["npx", "-y", "bash-language-server", "start"] },

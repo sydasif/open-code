@@ -33,9 +33,14 @@
     }
   },
   "mcp": {
-    "ddg_search": {
+    "Web Search": {
       "type": "local",
-      "command": ["web-search-mcp"],
+      "command": [
+        "uvx",
+        "--from",
+        "git+https://github.com/sydasif/web-search-mcp.git",
+        "web-search-mcp"
+      ],
       "enabled": true
     },
     "context7": {

@@ -33,12 +33,12 @@
     }
   },
   "mcp": {
-    "Web Search": {
+    "Web-Search": {
       "type": "local",
       "command": [
         "uvx",
         "--from",
-        "git+https://github.com/sydasif/web-search-mcp.git",
+        "git+https://github.com/sydasif/claude-plugins.git#subdirectory=web-search",
         "web-search-mcp"
       ],
       "enabled": true

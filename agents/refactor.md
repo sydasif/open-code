@@ -4,14 +4,14 @@ description: >
   Modernize legacy Python code with best practices, type hints,
   and efficient patterns.
 mode: subagent
-temperature: 0.3
+model: agnes-2.0-flash
 skill:
   - refactor-code
 ---
 
 # Docs
 
-- ~/.claude/docs/index.md
+- ~/.config/opencode/docs/index.md
 
 ## What I do
 

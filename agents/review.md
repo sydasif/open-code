@@ -5,13 +5,14 @@ description: >
   completeness, and confirms quality standards before submitting.
   Accepts: no args (uncommitted changes), commit hash, branch name, or PR number.
 mode: subagent
+model: agnes-2.0-flash
 skill:
   - review-code
 ---
 
 # Docs
 
-- ~/.claude/docs/index.md
+- ~/.config/opencode/docs/index.md
 
 ## What I do
 

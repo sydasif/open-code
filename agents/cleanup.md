@@ -4,14 +4,14 @@ description: >
   Codebase cleanup applying YAGNI, DRY, and KISS principles.
   Invoke to remove dead code, duplicated logic, and over-abstraction.
 mode: subagent
-temperature: 0.1
+model: agnes-2.0-flash
 skill:
   - cleanup-code
 ---
 
 # Docs
 
-- ~/.claude/docs/index.md
+- ~/.config/opencode/docs/index.md
 
 ## What I do
 

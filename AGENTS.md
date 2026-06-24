@@ -15,9 +15,9 @@ Before starting any task, I confirm the baseline:
 
 ### Python workflow
 
-- **Standards:** @~/.claude/docs/index.md (Python, Docker, tooling)
-- **Packages:** @~/.claude/docs/tooling/package-management.md (`uv`)
-- **Testing:** @~/.claude/docs/python/testing.md (`pytest`, coverage)
+- **Standards:** @~/.config/opencode/docs/index.md (Python, Docker, tooling)
+- **Packages:** @~/.config/opencode/docs/tooling/package-management.md (`uv`)
+- **Testing:** @~/.config/opencode/docs/python/testing.md (`pytest`, coverage)
 - **Optimization:** Use the `cleanup-code` → `refactor-code` → `review-code` pipeline
 
 ---

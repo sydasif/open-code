@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "instructions": ["~/.claude/docs/index.md"],
+  "instructions": ["~/.config/opencode/docs/index.md"],
   "default_agent": "plan",
   "formatter": {
     "prettier": {

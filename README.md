@@ -7,8 +7,8 @@ A configuration for [OpenCode](https://opencode.ai) — an AI-powered coding ass
 ## Features
 
 - **Agent system**: Specialized sub-agents for cleanup, refactor, and review
-- **External docs**: Instructions loaded from `~/.claude/docs/index.md` via `opencode.json`
-- **Skills pipeline**: Symlinked from `~/.claude/skills` — cleanup → refactor → review
+- **Local docs**: Python development standards in `docs/` — style, testing, typing, tooling
+- **Skills pipeline**: Skills in `skills/` — cleanup → refactor → review
 - **LSP integration**: Pyright and Ruff (Python), TypeScript, YAML, and Bash language servers
 - **MCP servers**: Web search (`ddg_search`), network automation (`nornir`), docs lookup (`context7`), codebase context (`repomix`)
 - **Auto-formatting**: `ruff` for Python, `prettier` for JS/TS/JSON/Markdown/YAML
@@ -31,9 +31,9 @@ git clone <this-repo> ~/.config/opencode
 | `opencode.json`   | Main config — providers, LSP, MCP, permissions, formatters                             |
 | `AGENTS.md`       | Base instructions — discovery, planning, execution, security                           |
 | `agents/*.md`     | Specialized sub-agent definitions                                                      |
-| `skills/`         | Symlink to `~/.claude/skills` — reusable skill capabilities                            |
-| `commands/`       | Symlink to `~/.claude/commands` — custom slash commands (`/git-commit`, `/git-update`) |
-| `~/.claude/docs/` | External docs referenced by `opencode.json` — Python standards, testing, tooling       |
+| `skills/`         | Local skills — reusable skill capabilities (cleanup, refactor, review, etc.)           |
+| `commands/`       | Custom slash commands (`/analyze-library`, `/review-structure`, etc.)                  |
+| `docs/`           | Python development standards — style, testing, typing, tooling, security               |
 
 ---
 

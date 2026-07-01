@@ -55,6 +55,11 @@
         "git+https://github.com/sydasif/web-search-mcp.git",
         "web-search-mcp"
       ],
+      "environment": {
+        "EXA_API_KEY": "{env:EXA_API_KEY}",
+        "AUTH_TOKEN": "{env:AUTH_TOKEN}",
+        "CT0": "{env:CT0}"
+      },
       "enabled": true
     },
     "context7": {

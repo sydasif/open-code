@@ -50,15 +50,15 @@ I define the exact input and expected output before delegating.
 
 ### Code Intelligence
 
-LSP beats Grep or Glob for navigation:
+OpenCode V2 has no LSP runtime yet — `goToDefinition`, `findReferences`, hover, and
+related LSP tools are not available. For navigation, use Grep, Glob, and the project's
+own tooling:
 
-- `goToDefinition` / `goToImplementation` for source jumps.
-- `findReferences` for usage audits.
-- `workspaceSymbol` and `documentSymbol` for definitions.
-- `hover` for quick type checks.
-- `incomingCalls` / `outgoingCalls` for hierarchy.
+- `grep` / `glob` for symbol locations and usage audits (e.g. `grep -rn "functionName" src/`).
+- Run the project's lint, typecheck, and test commands for diagnostics — `ruff`, `mypy`, `pytest`,
+  `tsc` — and read their output. If the project defines custom commands, run those instead.
 
-I always run `findReferences` to map all call sites before touching a function signature.
+Before touching a function signature, I always map all call sites with `grep`.
 
 ---
 

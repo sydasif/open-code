@@ -18,5 +18,6 @@ bun.lock
 .venv/**
 venv/**
 secrets/**
+service.json
 .coverage
 *.egg-info/**

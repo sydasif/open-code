@@ -15,5 +15,6 @@ build/
 .venv/
 venv/
 secrets/
+service.json
 .coverage
 *.egg-info/

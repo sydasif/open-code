@@ -1,19 +1,5 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "provider": {
-    "agnes": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Agnes",
-      "options": {
-        "baseURL": "https://apihub.agnes-ai.com/v1"
-      },
-      "models": {
-        "agnes-2.0-flash": {
-          "name": "Agnes 2.0 Flash"
-        }
-      }
-    }
-  },
   "instructions": ["~/.config/opencode/docs/index.md"],
   "default_agent": "plan",
   "formatter": {
@@ -26,54 +12,50 @@
       "extensions": [".py", ".pyi"]
     }
   },
-  "permission": {
-    "read": {
-      "*": "allow",
-      "*.env": "deny",
-      "*.env.*": "deny",
-      "*.pem": "deny",
-      "*.key": "deny",
-      "*.secret": "deny",
-      "*credentials*": "deny"
-    },
-    "edit": {
-      "*": "allow",
-      "*.env": "deny",
-      "*.env.*": "deny",
-      "*.pem": "deny",
-      "*.key": "deny",
-      "*.secret": "deny",
-      "*credentials*": "deny"
-    }
-  },
+  "permissions": [
+    { "action": "read", "resource": "*", "effect": "allow" },
+    { "action": "read", "resource": "*.env", "effect": "deny" },
+    { "action": "read", "resource": "*.env.*", "effect": "deny" },
+    { "action": "read", "resource": "*.pem", "effect": "deny" },
+    { "action": "read", "resource": "*.key", "effect": "deny" },
+    { "action": "read", "resource": "*.secret", "effect": "deny" },
+    { "action": "read", "resource": "*credentials*", "effect": "deny" },
+    { "action": "edit", "resource": "*", "effect": "allow" },
+    { "action": "edit", "resource": "*.env", "effect": "deny" },
+    { "action": "edit", "resource": "*.env.*", "effect": "deny" },
+    { "action": "edit", "resource": "*.pem", "effect": "deny" },
+    { "action": "edit", "resource": "*.key", "effect": "deny" },
+    { "action": "edit", "resource": "*.secret", "effect": "deny" },
+    { "action": "edit", "resource": "*credentials*", "effect": "deny" }
+  ],
   "mcp": {
-    "research": {
-      "type": "local",
-      "command": [
-        "uvx",
-        "--from",
-        "git+https://github.com/sydasif/web-search-mcp.git",
-        "web-search-mcp"
-      ],
-      "environment": {
-        "EXA_API_KEY": "{env:EXA_API_KEY}",
-        "AUTH_TOKEN": "{env:AUTH_TOKEN}",
-        "CT0": "{env:CT0}"
+    "servers": {
+      "research": {
+        "type": "local",
+        "command": [
+          "uvx",
+          "--from",
+          "git+https://github.com/sydasif/web-search-mcp.git",
+          "web-search-mcp"
+        ],
+        "environment": {
+          "EXA_API_KEY": "{env:EXA_API_KEY}",
+          "AUTH_TOKEN": "{env:AUTH_TOKEN}",
+          "CT0": "{env:CT0}"
+        }
       },
-      "enabled": true
-    },
-    "context7": {
-      "type": "remote",
-      "url": "https://mcp.context7.com/mcp",
-      "headers": {
-        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+      "context7": {
+        "type": "remote",
+        "url": "https://mcp.context7.com/mcp",
+        "oauth": false,
+        "headers": {
+          "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+        }
       },
-      "enabled": true
-    },
-    "repomix": {
-      "type": "local",
-      "command": ["npx", "-y", "repomix@latest", "--mcp"],
-      "enabled": true
+      "repomix": {
+        "type": "local",
+        "command": ["npx", "-y", "repomix@latest", "--mcp"]
+      }
     }
   },
   "lsp": {
@@ -90,8 +72,7 @@
   },
   "compaction": {
     "auto": true,
-    "prune": true,
-    "reserved": 10000
+    "buffer": 10000
   },
   "watcher": {
     "ignore": [

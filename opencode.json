@@ -1,10 +1,16 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "instructions": ["~/.config/opencode/docs/index.md"],
   "default_agent": "plan",
+  "model": "opencode/mimo-v2.6-flash-free",
+  "references": {
+    "docs": {
+      "path": "~/.config/opencode/docs",
+      "description": "Python, uv, Docker, and testing standards. Consult when applying project conventions, packaging, or test strategy."
+    }
+  },
   "formatter": {
     "prettier": {
-      "command": ["npx", "prettier", "--write", "$FILE"],
+      "command": ["npx", "-y", "prettier", "--write", "$FILE"],
       "extensions": [".ts", ".js", ".json", ".md", ".yaml", ".yml", ".html"]
     },
     "uv": {
@@ -26,7 +32,13 @@
     { "action": "edit", "resource": "*.pem", "effect": "deny" },
     { "action": "edit", "resource": "*.key", "effect": "deny" },
     { "action": "edit", "resource": "*.secret", "effect": "deny" },
-    { "action": "edit", "resource": "*credentials*", "effect": "deny" }
+    { "action": "edit", "resource": "*credentials*", "effect": "deny" },
+    { "action": "shell", "resource": "*git push*", "effect": "ask" },
+    { "action": "shell", "resource": "*.env*", "effect": "ask" },
+    { "action": "shell", "resource": "*.pem*", "effect": "ask" },
+    { "action": "shell", "resource": "*.key*", "effect": "ask" },
+    { "action": "shell", "resource": "*.secret*", "effect": "ask" },
+    { "action": "shell", "resource": "*credentials*", "effect": "ask" }
   ],
   "mcp": {
     "servers": {
@@ -57,18 +69,6 @@
         "command": ["npx", "-y", "repomix@latest", "--mcp"]
       }
     }
-  },
-  "lsp": {
-    "pyright": {
-      "command": ["pyright-langserver", "--stdio"]
-    },
-    "ruff": {
-      "command": ["ruff", "server"],
-      "extensions": [".py", ".pyi"]
-    },
-    "yaml-ls": { "command": ["npx", "-y", "yaml-language-server", "--stdio"] },
-    "bash": { "command": ["npx", "-y", "bash-language-server", "start"] },
-    "typescript": { "command": ["typescript-language-server", "--stdio"] }
   },
   "compaction": {
     "auto": true,

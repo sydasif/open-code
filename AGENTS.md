@@ -15,10 +15,10 @@ Before starting any task, I confirm the baseline:
 
 ### Python workflow
 
-- **Standards:** @~/.config/opencode/docs/index.md (Python, Docker, tooling)
-- **Packages:** @~/.config/opencode/docs/tooling/package-management.md (`uv`)
-- **Testing:** @~/.config/opencode/docs/python/testing.md (`pytest`, coverage)
-- **Optimization:** Use the `cleanup-code` → `refactor-code` → `review-code` pipeline
+- **Standards:** Read the `docs` reference (see `references` in `opencode.json`) — start at `docs/index.md` (Python, Docker, tooling)
+- **Packages:** `docs/tooling/package-management.md` (`uv`)
+- **Testing:** `docs/python/testing.md` (`pytest`, coverage)
+- **Optimization:** Use the `cleanup-code` → `refactor-code` → `review-code` agents, in that order
 
 ---
 
